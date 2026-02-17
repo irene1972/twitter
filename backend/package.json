@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "DevWebCamp con express, js, css y html",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --import dotenv/config index.js",
+    "start": "node --import dotenv/config index.js"
+  },
+  "author": "Irene Olmos",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mysql2": "^3.16.1",
+    "nodemailer": "^7.0.12"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}

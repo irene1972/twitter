@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    margin: 1rem;
+    font-family:'Segoe UI, Tahoma, Geneva, Verdana, sans-serif';
+    font-size: 1em;
+}
+img{
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.contenedor{
+    max-width: 1200px;
+    margin:0 auto;
+}
+@media(max-width:600px){
+    section.contenedor-flex{
+        flex-direction: column;
+    }
+    nav{
+        margin-top: 1rem;
+    }
+}
