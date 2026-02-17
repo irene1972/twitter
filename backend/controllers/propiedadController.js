@@ -1,9 +1,11 @@
 import email from '../helpers/email.js';
-import pool from '../config/db.js';
+import { User } from '../models/User.js';
 
 const getUsers=async(req,res)=>{
     try {
-        const resultado=await pool.query('SELECT * FROM usuarios');
+        const usuario=new User();
+        const resultado=await usuario.getAll();
+        //const resultado=await pool.query('SELECT * FROM usuarios');
         res.json(resultado[0]);
     } catch (error) {
         return res.status(500).json({error:'Ha habido un error al consultar la base de datos'});
