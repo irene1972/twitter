@@ -1,7 +1,7 @@
 import pool from '../config/db.js';
 
 export class User{
-    constructor(role,name,surname,nick,email,password,image){
+    constructor(name,email,password,image=null,role='user',surname=null,nick=null,){
         this.id=0;
         this.role=role;
         this.name=name;
@@ -22,5 +22,15 @@ export class User{
             return false;
         }
         
+    }
+    async insert(){
+        try {
+            const result=await pool.query('INSERT INTO users (role,name,email,password,created_at,updated_at) VALUES (?,?,?,?,?,?)',[
+                this.role,this.name,this.email,this.password,this.created_at,this.updated_at
+            ]);
+            return result;
+        } catch (error) {
+            return false;
+        }
     }
 }
