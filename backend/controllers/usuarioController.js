@@ -1,5 +1,6 @@
-import email from '../helpers/email.js';
+import enviarEmail from '../helpers/email.js';
 import { encriptarPassword, matchPassword } from '../helpers/password.js';
+import { crearToken } from '../helpers/token.js';
 import { User } from '../models/User.js';
 
 const getUsers = async (req, res) => {
@@ -28,34 +29,35 @@ const envioEmail = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        return res.status(400).json({ error: 'Ha habido un error' });
+        return res.status(400).json({ error: 'Ha habido un error al enviarse el email' });
     }
 }
 
 const loginUsuario = async (req, res) => {
-    const {email,password}=req.body;
-    if(!email || !password){
+    const { email, password } = req.body;
+    if (!email || !password) {
         return res.status(400).json({ error: 'Los dos campos son obligatorios' });
     }
     try {
         const usuario = new User();
         const resultado = await usuario.getByEmail(email);
-        if(resultado){
-            if(resultado[0].length===0){
+        if (resultado) {
+            if (resultado[0].length === 0) {
                 return res.status(400).json({ error: 'El usuario no está registrado' });
             }
-            const usuarioEncontrado=resultado[0][0];
-            const matched=await matchPassword(password,usuarioEncontrado.password);
-            if(matched){
-                res.json({mensaje:'Usuario logueado correctamente',email});
-            }else{
+            const usuarioEncontrado = resultado[0][0];
+            const matched = await matchPassword(password, usuarioEncontrado.password);
+            if (matched) {
+                res.json({ mensaje: 'Usuario logueado correctamente', email });
+
+            } else {
                 return res.status(400).json({ error: 'El usuario o password no coinciden' });
             }
-            
-        }else{
+
+        } else {
             return res.status(500).json({ error: 'Ha habido un error al consultar la base de datos' });
         }
-        
+
     } catch (error) {
         return res.status(500).json({ error: 'Ha habido un error al consultar los datos' });
     }
@@ -72,15 +74,32 @@ const crearUsuario = async (req, res) => {
     }
     //todo: hashear el password antes de insertarlo
     const hashedPassword = await encriptarPassword(password);
-    console.log('hashedPassword:', hashedPassword);
+    const token = crearToken(email);
     try {
-        const usuario = new User(nombre, email, hashedPassword);
+        const usuario = new User(nombre, email, hashedPassword, token);
         const resultado = await usuario.insert();
         if (resultado) {
-            res.json({
-                mensaje: `El usuario ha sido registrado correctamente`,
-                usuario: email
-            });
+            try {
+                //envio del email
+                enviarEmail({
+                    email,
+                    nombre
+                });
+
+                //res.json({ mensaje: `El email se ha enviado correctamente` });
+                
+                res.json({
+                    mensaje: `El usuario ha sido registrado correctamente`,
+                    usuario: email
+                });
+                
+                //res.json(usuarioEncontrado);
+
+            } catch (error) {
+                console.log(error);
+                return res.status(400).json({ error: 'Ha habido un error al enviarse el email' });
+            }
+
         } else {
             return res.status(500).json({ error: 'Ha habido un error al insertarse los datos en la bd' });
         }
