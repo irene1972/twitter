@@ -73,8 +73,8 @@ export class Registro {
         }
         this.mensaje=data.mensaje;
         this.tipo=true;
-        localStorage.setItem('usuarioTwitter',JSON.stringify(data.usuario));
-        this.router.navigate(['/home']);
+        //localStorage.setItem('usuarioTwitter',JSON.stringify(data.usuario));
+        this.router.navigate(['/login']);
       })
       .catch(error=>console.log(error))
       .finally(()=>{

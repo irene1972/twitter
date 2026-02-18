@@ -1,66 +1,97 @@
 import email from '../helpers/email.js';
-import { encriptarPassword } from '../helpers/password.js';
+import { encriptarPassword, matchPassword } from '../helpers/password.js';
 import { User } from '../models/User.js';
 
-const getUsers=async(req,res)=>{
+const getUsers = async (req, res) => {
     try {
-        const usuario=new User();
-        const resultado=await usuario.getAll();
+        const usuario = new User();
+        const resultado = await usuario.getAll();
         //const resultado=await pool.query('SELECT * FROM usuarios');
         res.json(resultado[0]);
     } catch (error) {
-        return res.status(500).json({error:'Ha habido un error al consultar la base de datos'});
+        return res.status(500).json({ error: 'Ha habido un error al consultar la base de datos' });
     }
-    
+
 }
 
-const envioEmail=async (req, res) => {
+const envioEmail = async (req, res) => {
     //res.json('Funciona!');
 
     try {
         //envio del email
         email({
-            email:'ireneog_72@hotmail.es',
+            email: 'ireneog_72@hotmail.es',
             nombre: 'Irene Olmos'
         });
 
-        res.json({mensaje:`El email se ha enviado correctamente`});
+        res.json({ mensaje: `El email se ha enviado correctamente` });
 
     } catch (error) {
         console.log(error);
-        return res.status(400).json({error:'Ha habido un error'});
+        return res.status(400).json({ error: 'Ha habido un error' });
     }
 }
 
-const crearUsuario=async (req, res) => {
-    const {nombre,email,password,confirmPassword}=req.body;
-    if(!nombre && !email && !password && !confirmPassword){
-        return res.status(400).json({error:'Todos los campos son requeridos'});
+const loginUsuario = async (req, res) => {
+    const {email,password}=req.body;
+    if(!email || !password){
+        return res.status(400).json({ error: 'Los dos campos son obligatorios' });
     }
-    if(password !== confirmPassword){
-        return res.status(400).json({error:'Los password deben ser iguales'});
+    try {
+        const usuario = new User();
+        const resultado = await usuario.getByEmail(email);
+        if(resultado){
+            if(resultado[0].length===0){
+                return res.status(400).json({ error: 'El usuario no está registrado' });
+            }
+            const usuarioEncontrado=resultado[0][0];
+            const matched=await matchPassword(password,usuarioEncontrado.password);
+            if(matched){
+                res.json({mensaje:'Usuario logueado correctamente',email});
+            }else{
+                return res.status(400).json({ error: 'El usuario o password no coinciden' });
+            }
+            
+        }else{
+            return res.status(500).json({ error: 'Ha habido un error al consultar la base de datos' });
+        }
+        
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido un error al consultar los datos' });
+    }
+
+}
+
+const crearUsuario = async (req, res) => {
+    const { nombre, email, password, confirmPassword } = req.body;
+    if (!nombre && !email && !password && !confirmPassword) {
+        return res.status(400).json({ error: 'Todos los campos son requeridos' });
+    }
+    if (password !== confirmPassword) {
+        return res.status(400).json({ error: 'Los password deben ser iguales' });
     }
     //todo: hashear el password antes de insertarlo
-    const hashedPassword=await encriptarPassword(password);
-    console.log('hashedPassword:',hashedPassword);
+    const hashedPassword = await encriptarPassword(password);
+    console.log('hashedPassword:', hashedPassword);
     try {
-        const usuario=new User(nombre,email,hashedPassword);
-        const resultado=await usuario.insert();
-        if(resultado){
+        const usuario = new User(nombre, email, hashedPassword);
+        const resultado = await usuario.insert();
+        if (resultado) {
             res.json({
-                mensaje:`El usuario ha sido registrado correctamente`,
+                mensaje: `El usuario ha sido registrado correctamente`,
                 usuario: email
             });
-        }else{
-            return res.status(500).json({error:'Ha habido un error al insertarse los datos en la bd'});
+        } else {
+            return res.status(500).json({ error: 'Ha habido un error al insertarse los datos en la bd' });
         }
     } catch (error) {
-        return res.status(500).json({error:'Ha habido un error al insertarse los datos'});
+        return res.status(500).json({ error: 'Ha habido un error al insertarse los datos' });
     }
 }
 
 export {
     envioEmail,
     getUsers,
+    loginUsuario,
     crearUsuario
 }
