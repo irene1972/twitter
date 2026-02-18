@@ -10,15 +10,15 @@ const email=async (datos)=>{
         pass: process.env.EMAIL_PASS
     }
     });
-    const {email,nombre}=datos;
+    const {email,nombre,token}=datos;
     //enviar email
     const info=await transporter.sendMail({
-        from:'DevWebCamp',
+        from:'Twitter',
         to:email,
-        subject:'Envio de email prueba',
-        text:'Confirma que ha llegado el email',
+        subject:'Email de confirmación',
+        text:'Confirma que eres tú quien se ha registrado en Twitter',
         html:`
-                <p>Hola: ${nombre}, confirma el envío del email en DevWebCamp</p>
+                <p>Hola: ${nombre}, confirma tu registro en Twitter haciendo click en el siguiente enlace: <a href="${process.env.URL_FRONTEND}confirmar/${token}">Confirmar</a></p>
             `
     });
 }

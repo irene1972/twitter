@@ -83,17 +83,15 @@ const crearUsuario = async (req, res) => {
                 //envio del email
                 enviarEmail({
                     email,
-                    nombre
+                    nombre,
+                    token
                 });
-
-                //res.json({ mensaje: `El email se ha enviado correctamente` });
                 
                 res.json({
                     mensaje: `El usuario ha sido registrado correctamente`,
                     usuario: email
                 });
                 
-                //res.json(usuarioEncontrado);
 
             } catch (error) {
                 console.log(error);

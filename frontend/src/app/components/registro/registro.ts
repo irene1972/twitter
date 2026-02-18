@@ -74,7 +74,7 @@ export class Registro {
         this.mensaje=data.mensaje;
         this.tipo=true;
         //localStorage.setItem('usuarioTwitter',JSON.stringify(data.usuario));
-        this.router.navigate(['/login']);
+        this.router.navigate(['/registro-exitoso']);
       })
       .catch(error=>console.log(error))
       .finally(()=>{

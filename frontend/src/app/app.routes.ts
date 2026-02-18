@@ -4,6 +4,8 @@ import { Contacto } from './components/contacto/contacto';
 import { C404 } from './components/c404/c404';
 import { Login } from './components/login/login';
 import { Registro } from './components/registro/registro';
+import { RegistroExitoso } from './components/registro-exitoso/registro-exitoso';
+import { Confirmar } from './components/confirmar/confirmar';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
@@ -11,5 +13,7 @@ export const routes: Routes = [
     {path:'contacto',component:Contacto},
     {path:'login',component:Login},
     {path:'registro',component:Registro},
+    {path:'registro-exitoso',component:RegistroExitoso},
+    {path:'confirmar/:token',component:Confirmar},
     {path:'**',component:C404}
 ];
