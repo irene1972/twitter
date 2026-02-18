@@ -18,8 +18,9 @@
 }
 
 a{
+    cursor:pointer;
     text-decoration: none;
-    color:white;
+    color:white !important;
 }
 
 .activo{
