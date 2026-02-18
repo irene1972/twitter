@@ -1,0 +1,10 @@
+section{
+    padding: 2rem;
+}
+.text-danger{
+    color:red;
+}
+.text-success{
+    background-color: green;
+    color:white;
+}
