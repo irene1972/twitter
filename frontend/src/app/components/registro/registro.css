@@ -6,7 +6,7 @@ section{
 }
 .text-success{
     background-color: green;
-    color:white;
+    color:white !important;
 }
 button{
     margin-top: 1rem;

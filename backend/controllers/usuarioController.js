@@ -1,4 +1,5 @@
 import email from '../helpers/email.js';
+import { encriptarPassword } from '../helpers/password.js';
 import { User } from '../models/User.js';
 
 const getUsers=async(req,res)=>{
@@ -40,11 +41,16 @@ const crearUsuario=async (req, res) => {
         return res.status(400).json({error:'Los password deben ser iguales'});
     }
     //todo: hashear el password antes de insertarlo
+    const hashedPassword=await encriptarPassword(password);
+    console.log('hashedPassword:',hashedPassword);
     try {
-        const usuario=new User(nombre,email,password);
+        const usuario=new User(nombre,email,hashedPassword);
         const resultado=await usuario.insert();
         if(resultado){
-            res.json({mensaje:`El usuario ha sido registrado correctamente`});
+            res.json({
+                mensaje:`El usuario ha sido registrado correctamente`,
+                usuario: email
+            });
         }else{
             return res.status(500).json({error:'Ha habido un error al insertarse los datos en la bd'});
         }
