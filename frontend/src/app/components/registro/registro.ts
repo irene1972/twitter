@@ -72,7 +72,7 @@ export class Registro {
       this.miForm.markAllAsTouched();
       return;
     }
-    console.log(this.miForm.value);
+    //console.log(this.miForm.value);
     fetch(`${environment.apiUrl}/usuarios/registrar`, {
       method: 'POST',
       headers: {
@@ -82,7 +82,7 @@ export class Registro {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
         if (data.error) {
           this.mensaje = data.error;
           return;

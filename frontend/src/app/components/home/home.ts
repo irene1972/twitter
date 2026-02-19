@@ -9,6 +9,6 @@ import { environment } from '../../../environments/environment';
 })
 export class Home {
    ngOnInit(): void {
-    console.log(environment.apiUrl);
+    //console.log(environment.apiUrl);
   }
 }

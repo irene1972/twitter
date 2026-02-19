@@ -18,7 +18,7 @@ export class Confirmar {
     //recuperar parámetro de la url
     this.route.paramMap.subscribe(params => {
       const token= params.get('token');
-      console.log(token);
+      //console.log(token);
 
       fetch(`${environment.apiUrl}/usuarios/confirmar`,{
                 method:'PUT',
@@ -29,7 +29,7 @@ export class Confirmar {
               })
                 .then(response=>response.json())
                 .then(data=>{
-                  console.log(data);
+                  //console.log(data);
                   if(data.error){
                     this.mensaje=data.error;
                     return;
