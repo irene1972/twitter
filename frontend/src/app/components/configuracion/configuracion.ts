@@ -15,6 +15,9 @@ export class Configuracion {
   mensaje: string = '';
   tipo: boolean = false;
   usuario: any = {};
+  imagenFile!: File | null;
+  urlImgs: string = environment.imagesUrl;
+  img: string = '';
 
   constructor(private cd: ChangeDetectorRef, private router: Router) {
     this.miForm = new FormGroup({
@@ -33,7 +36,8 @@ export class Configuracion {
       email: new FormControl('', [
         Validators.required,
         Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
-      ])
+      ]),
+      imagen: new FormControl('', [])
     }, []);
   }
 
@@ -75,6 +79,8 @@ export class Configuracion {
           this.miForm.get('nombre')?.setValue(data.name);
           this.miForm.get('apellido')?.setValue(data.surname);
           this.miForm.get('email')?.setValue(data.email);
+          this.img = data.image;
+
         })
         .catch(error => console.log(error))
         .finally(() => {
@@ -89,35 +95,77 @@ export class Configuracion {
       this.miForm.markAllAsTouched();
       return;
     }
-    //console.log(this.miForm.value);
-    const datos:any={};
-    datos.nick=this.miForm.value.nick;
-    datos.nombre=this.miForm.value.nombre;
-    datos.apellido=this.miForm.value.apellido;
-    datos.email=this.miForm.value.email;
-    datos.old_email=this.usuario.email;
+    if (!this.imagenFile) {
 
-    fetch(`${environment.apiUrl}/usuarios/actualizar`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8'
-      },
-      body: JSON.stringify(datos)
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        if (data.error) {
-          this.mensaje = data.error;
-          return;
-        }
-        this.mensaje = data.mensaje;
-        this.tipo = true;
+      //console.log(this.miForm.value);
+      const datos: any = {};
+      datos.nick = this.miForm.value.nick;
+      datos.nombre = this.miForm.value.nombre;
+      datos.apellido = this.miForm.value.apellido;
+      datos.email = this.miForm.value.email;
+      datos.old_email = this.usuario.email;
+
+      fetch(`${environment.apiUrl}/usuarios/actualizar`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify(datos)
       })
-      .catch(error => console.log(error))
-      .finally(() => {
-        this.cd.detectChanges();
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          if (data.error) {
+            this.mensaje = data.error;
+            return;
+          }
+          this.mensaje = data.mensaje;
+          this.tipo = true;
+        })
+        .catch(error => console.log(error))
+        .finally(() => {
+          this.cd.detectChanges();
+        });
+    } else {
+      const formData = new FormData();
+
+      // campos normales
+      Object.entries(this.miForm.value).forEach(([key, value]) => {
+        formData.append(key, value as string);
       });
 
+      formData.append('old_email', this.usuario.email);
+
+      // archivo
+      formData.append('imagen', this.imagenFile);
+
+      fetch(`${environment.apiUrl}/usuarios/actualizar-con-imagen`, {
+        method: 'PUT',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            this.mensaje = data.error;
+            return;
+          }
+          this.mensaje = data.mensaje;
+          this.tipo = true;
+        })
+        .catch(error => console.log(error))
+        .finally(() => {
+          this.cd.detectChanges();
+        });
+    }
+
+  }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      this.imagenFile = input.files[0];
+      console.log(this.imagenFile);
+    }
   }
 }

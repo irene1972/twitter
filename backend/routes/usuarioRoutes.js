@@ -6,8 +6,10 @@ import {
     loginUsuario,
     crearUsuario,
     confirmarUsuario,
-    updateUsuario
+    updateUsuario,
+    updateUsuarioConImagen
 } from '../controllers/usuarioController.js';
+import upload from '../helpers/upload.js';
 
 const router=express.Router();
 
@@ -16,6 +18,7 @@ router.get('/listar',getUsers);
 router.get('/obtener/:email',getUser);
 router.put('/confirmar',confirmarUsuario);
 router.put('/actualizar',updateUsuario);
+router.put('/actualizar-con-imagen',upload.single('imagen'),updateUsuarioConImagen);
 router.post('/login',loginUsuario);
 router.post('/registrar',crearUsuario);
 

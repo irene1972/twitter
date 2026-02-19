@@ -155,27 +155,59 @@ const confirmarUsuario = async (req, res) => {
 }
 
 const updateUsuario = async (req, res) => {
-    const {nick,nombre,apellido,email,old_email}=req.body;
-   
+    const { nick, nombre, apellido, email, old_email } = req.body;
+
+    if (!nick || !nombre || !apellido || !email || !old_email) {
+        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+    }
+
     try {
-    
+
         const usuario = new User();
         const resultado = await usuario.updateByEmail(nick, nombre, apellido, email, old_email);
-        
-        if(resultado){
+
+        if (resultado) {
             if (resultado[0].affectedRows > 0) {
-            res.json({mensaje:'Actualizado correctamente'});
+                res.json({ mensaje: 'Actualizado correctamente' });
+            } else {
+                return res.status(500).json({ error: 'Ha habido un error durante la actualización de la bd' });
+            }
         } else {
             return res.status(500).json({ error: 'Ha habido un error durante la actualización de la bd' });
         }
-        }else{
-           return res.status(500).json({ error: 'Ha habido un error durante la actualización de la bd' }); 
-        }
-            
+
     } catch (error) {
         return res.status(500).json({ error: 'Ha habido un error durante la actualización' });
     }
-        
+
+}
+
+const updateUsuarioConImagen = async (req, res) => {
+    const { nick, nombre, apellido, email, old_email } = req.body;
+    const imagen = req.file.filename;
+    
+    if (!nick || !nombre || !apellido || !email || !old_email) {
+        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+    }
+
+    try {
+
+        const usuario = new User();
+        const resultado = await usuario.updateByEmailConImagen(nick, nombre, apellido, email,imagen, old_email);
+
+        if (resultado) {
+            if (resultado[0].affectedRows > 0) {
+                res.json({ mensaje: 'Actualizado correctamente' });
+            } else {
+                return res.status(500).json({ error: 'Ha habido un error durante la actualización de la bd' });
+            }
+        } else {
+            return res.status(500).json({ error: 'Ha habido un error durante la actualización de la bd' });
+        }
+
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido un error durante la actualización' });
+    }
 }
 
 export {
@@ -185,5 +217,6 @@ export {
     loginUsuario,
     crearUsuario,
     confirmarUsuario,
-    updateUsuario
+    updateUsuario,
+    updateUsuarioConImagen
 }

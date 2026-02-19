@@ -29,6 +29,7 @@ app.use(express.json());
 dotenv.config();
 
 app.use('/api/usuarios',usuarioRoutes);
+app.use('/imgs', express.static('public/imgs'));
 
 const PORT=process.env.PORT || 3000;
 

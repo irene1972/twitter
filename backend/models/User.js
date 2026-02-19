@@ -81,6 +81,18 @@ export class User {
         }
     }
 
+    async updateByEmailConImagen(nick,name,surname,new_email,imagen,old_email){
+        try {
+        
+            const result = await pool.query('UPDATE users SET nick=?,name=?, surname=?, email=?,image=?, updated_at=? WHERE email=?',[nick,name,surname,new_email,imagen,this.updated_at,old_email]);
+            console.log(result);
+            return result;
+            
+        } catch (error) {
+            return false;
+        }
+    }
+
     async insert() {
         try {
             const result = await pool.query('INSERT INTO users (role,name,email,password,remember_token,surname,nick,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,?)', [
