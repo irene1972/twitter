@@ -3,6 +3,8 @@
     <nav>
         <ul class="lista-flex">
             @if(usuario.email){
+            <li><a [routerLink]="['/home']" routerLinkActive="activo">Inicio</a></li>
+            <li><a [routerLink]="['/home']" routerLinkActive="activo">Subir imagen</a></li>
             <li>
                 <div class="btn-group">
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
@@ -11,13 +13,20 @@
                     </button>
 
                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" [routerLink]="['/home']" routerLinkActive="activo">Mi perfil</a>
+                        </li>
+                        <li><a class="dropdown-item" [routerLink]="['/configuracion']"
+                                routerLinkActive="activo">Configuración</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li><a class="dropdown-item" [routerLink]="['/login']" routerLinkActive="activo">Login</a></li>
                         <li><a class="dropdown-item" [routerLink]="['/registro']"
                                 routerLinkActive="activo">Registrarse</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a (click)="cerrarSesion()">Cerrar Sesión</a></li>
+                        <li><a class="dropdown-item" (click)="cerrarSesion()">Cerrar Sesión</a></li>
                     </ul>
                 </div>
             </li>

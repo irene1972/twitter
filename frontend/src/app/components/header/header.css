@@ -1,12 +1,3 @@
-.contenedor{
-    /*
-    background-color: black;
-    max-width: 1004px;
-    margin: 0 auto;
-    padding: 2rem 0;
-    */
-}
-
 .contenedor-flex{
     display: flex;
     justify-content: space-between;
@@ -44,6 +35,9 @@ ul{
 }
 .dropdown-divider{
     border-color: white;
+}
+.lista-flex{
+    align-items: center;
 }
 @media screen and (max-width: 400px) {
     .contenedor-flex{

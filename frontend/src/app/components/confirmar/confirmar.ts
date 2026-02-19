@@ -36,9 +36,6 @@ export class Confirmar {
                   }
                   this.mensaje=data.mensaje;
                   this.tipo=true;
-                  
-                  //localStorage.setItem('usuarioTwitter',JSON.stringify(data.email));
-                  //this.router.navigate(['/home']);
                 })
                 .catch(error=>console.log(error))
                 .finally(()=>{

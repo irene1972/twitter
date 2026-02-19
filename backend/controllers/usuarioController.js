@@ -15,6 +15,26 @@ const getUsers = async (req, res) => {
 
 }
 
+const getUser = async (req, res) => {
+    const email = req.params.email;
+    try {
+        const usuario = new User();
+        const resultado = await usuario.getByEmail(email);
+        if (resultado) {
+            if (resultado[0].length === 0) {
+                return res.status(400).json({ error: 'El usuario no existe' });
+            } else {
+                res.json(resultado[0][0]);
+            }
+        }
+        else {
+            return res.status(500).json({ error: 'Ha habido algún error al consultar la bd' });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido algún error al consultar los datos' });
+    }
+}
+
 const envioEmail = async (req, res) => {
     //res.json('Funciona!');
 
@@ -48,11 +68,12 @@ const loginUsuario = async (req, res) => {
             const usuarioEncontrado = resultado[0][0];
             const matched = await matchPassword(password, usuarioEncontrado.password);
             if (matched) {
-                res.json({  mensaje: 'Usuario logueado correctamente', 
-                            email,
-                            rol:usuarioEncontrado.role,
-                            nombre:usuarioEncontrado.name
-                         });
+                res.json({
+                    mensaje: 'Usuario logueado correctamente',
+                    email,
+                    rol: usuarioEncontrado.role,
+                    nombre: usuarioEncontrado.name
+                });
 
             } else {
                 return res.status(400).json({ error: 'El usuario o password no coinciden' });
@@ -80,7 +101,7 @@ const crearUsuario = async (req, res) => {
     const hashedPassword = await encriptarPassword(password);
     const token = crearToken(email);
     try {
-        const usuario = new User(nombre, email, hashedPassword, token,apellido,nick);
+        const usuario = new User(nombre, email, hashedPassword, token, apellido, nick);
         const resultado = await usuario.insert();
         if (resultado) {
             try {
@@ -116,16 +137,16 @@ const confirmarUsuario = async (req, res) => {
 
     try {
         const datos = await decodificarToken(token, process.env.JWT_SECRET);
-        if(datos==='error'){
+        if (datos === 'error') {
             return res.status(400).json({ error: 'Token no válido' });
         }
         const email = datos.user;
         const usuario = new User();
-        const resultado=await usuario.updateConfirmado(email);
-        if(resultado[0].affectedRows>0){
+        const resultado = await usuario.updateConfirmado(email);
+        if (resultado[0].affectedRows > 0) {
             //res.json(resultado);
-            res.json({mensaje:'Usuario confirmado correctamente'});
-        }else{
+            res.json({ mensaje: 'Usuario confirmado correctamente' });
+        } else {
             return res.status(500).json({ error: 'Ha habido un error durante la confirmación' });
         }
     } catch (error) {
@@ -133,10 +154,36 @@ const confirmarUsuario = async (req, res) => {
     }
 }
 
+const updateUsuario = async (req, res) => {
+    const {nick,nombre,apellido,email,old_email}=req.body;
+   
+    try {
+    
+        const usuario = new User();
+        const resultado = await usuario.updateByEmail(nick, nombre, apellido, email, old_email);
+        
+        if(resultado){
+            if (resultado[0].affectedRows > 0) {
+            res.json({mensaje:'Actualizado correctamente'});
+        } else {
+            return res.status(500).json({ error: 'Ha habido un error durante la actualización de la bd' });
+        }
+        }else{
+           return res.status(500).json({ error: 'Ha habido un error durante la actualización de la bd' }); 
+        }
+            
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido un error durante la actualización' });
+    }
+        
+}
+
 export {
     envioEmail,
     getUsers,
+    getUser,
     loginUsuario,
     crearUsuario,
-    confirmarUsuario
+    confirmarUsuario,
+    updateUsuario
 }

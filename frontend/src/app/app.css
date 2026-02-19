@@ -3,6 +3,9 @@ header{
     color:white;
     padding: 2rem 0;
 }
+main{
+    padding: 1rem;
+}
 footer{
     background-color: black;
     color:white;

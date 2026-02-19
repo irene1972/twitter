@@ -1,5 +1,5 @@
 import pool from '../config/db.js';
-//import mysql from 'mysql2/promise';
+import mysql from 'mysql2/promise';
 
 export class User {
     constructor(name, email, password, remember_token, surname = null, nick = null, image = null, role = 'user') {
@@ -67,6 +67,18 @@ export class User {
         const result = await pool.query(sql, values);
         return result;
         */
+    }
+
+    async updateByEmail(nick,name,surname,new_email,old_email){
+        try {
+        
+            const result = await pool.query('UPDATE users SET nick=?,name=?, surname=?, email=?, updated_at=? WHERE email=?',[nick,name,surname,new_email,this.updated_at,old_email]);
+            console.log(result);
+            return result;
+            
+        } catch (error) {
+            return false;
+        }
     }
 
     async insert() {
