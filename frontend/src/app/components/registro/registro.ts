@@ -14,9 +14,17 @@ export class Registro {
   mensaje: string = '';
   tipo: boolean = false;
 
-  constructor(private cd: ChangeDetectorRef,private router: Router) {
+  constructor(private cd: ChangeDetectorRef, private router: Router) {
     this.miForm = new FormGroup({
+      nick: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3)
+      ]),
       nombre: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3)
+      ]),
+      apellido: new FormControl('', [
         Validators.required,
         Validators.minLength(3)
       ]),
@@ -35,8 +43,16 @@ export class Registro {
     }, []);
   }
 
+  get nick() {
+    return this.miForm.get('nick');
+  }
+
   get nombre() {
     return this.miForm.get('nombre');
+  }
+
+  get apellido() {
+    return this.miForm.get('apellido');
   }
 
   get email() {
@@ -57,27 +73,27 @@ export class Registro {
       return;
     }
     console.log(this.miForm.value);
-    fetch(`${environment.apiUrl}/usuarios/registrar`,{
-      method:'POST',
-      headers:{
+    fetch(`${environment.apiUrl}/usuarios/registrar`, {
+      method: 'POST',
+      headers: {
         'Content-Type': 'application/json; charset=UTF-8'
       },
-      body:JSON.stringify(this.miForm.value)
+      body: JSON.stringify(this.miForm.value)
     })
-      .then(response=>response.json())
-      .then(data=>{
+      .then(response => response.json())
+      .then(data => {
         console.log(data);
-        if(data.error){
-          this.mensaje=data.error;
+        if (data.error) {
+          this.mensaje = data.error;
           return;
         }
-        this.mensaje=data.mensaje;
-        this.tipo=true;
+        this.mensaje = data.mensaje;
+        this.tipo = true;
         //localStorage.setItem('usuarioTwitter',JSON.stringify(data.usuario));
         this.router.navigate(['/registro-exitoso']);
       })
-      .catch(error=>console.log(error))
-      .finally(()=>{
+      .catch(error => console.log(error))
+      .finally(() => {
         this.cd.detectChanges();
       });
   }

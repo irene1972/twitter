@@ -65,8 +65,8 @@ const loginUsuario = async (req, res) => {
 }
 
 const crearUsuario = async (req, res) => {
-    const { nombre, email, password, confirmPassword } = req.body;
-    if (!nombre && !email && !password && !confirmPassword) {
+    const { nombre, email, password, confirmPassword, apellido, nick } = req.body;
+    if (!nombre || !email || !password || !confirmPassword || !apellido || !nick) {
         return res.status(400).json({ error: 'Todos los campos son requeridos' });
     }
     if (password !== confirmPassword) {
@@ -76,7 +76,7 @@ const crearUsuario = async (req, res) => {
     const hashedPassword = await encriptarPassword(password);
     const token = crearToken(email);
     try {
-        const usuario = new User(nombre, email, hashedPassword, token);
+        const usuario = new User(nombre, email, hashedPassword, token,apellido,nick);
         const resultado = await usuario.insert();
         if (resultado) {
             try {
@@ -118,8 +118,9 @@ const confirmarUsuario = async (req, res) => {
         const email = datos.user;
         const usuario = new User();
         const resultado=await usuario.updateConfirmado(email);
-        if(resultado){
-             res.json({mensaje:'Usuario confirmado correctamente'});
+        if(resultado[0].affectedRows>0){
+            //res.json(resultado);
+            res.json({mensaje:'Usuario confirmado correctamente'});
         }else{
             return res.status(500).json({ error: 'Ha habido un error durante la confirmación' });
         }
