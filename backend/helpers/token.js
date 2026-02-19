@@ -9,7 +9,7 @@ const crearToken=function(user){
 const decodificarToken=async function(token,secret){
 
     const usuario=new User();
-    const response=await usuario.getUserByToken(token);
+    const response=await usuario.getByToken(token);
     
     if(response[0][0]===undefined){
         return "error";

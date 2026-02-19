@@ -1,6 +1,6 @@
 import enviarEmail from '../helpers/email.js';
 import { encriptarPassword, matchPassword } from '../helpers/password.js';
-import { crearToken } from '../helpers/token.js';
+import { crearToken, decodificarToken } from '../helpers/token.js';
 import { User } from '../models/User.js';
 
 const getUsers = async (req, res) => {
@@ -86,12 +86,12 @@ const crearUsuario = async (req, res) => {
                     nombre,
                     token
                 });
-                
+
                 res.json({
                     mensaje: `El usuario ha sido registrado correctamente`,
                     usuario: email
                 });
-                
+
 
             } catch (error) {
                 console.log(error);
@@ -106,9 +106,32 @@ const crearUsuario = async (req, res) => {
     }
 }
 
+const confirmarUsuario = async (req, res) => {
+
+    const { token } = req.body;
+
+    try {
+        const datos = await decodificarToken(token, process.env.JWT_SECRET);
+        if(datos==='error'){
+            return res.status(400).json({ error: 'Token no válido' });
+        }
+        const email = datos.user;
+        const usuario = new User();
+        const resultado=await usuario.updateConfirmado(email);
+        if(resultado){
+             res.json({mensaje:'Usuario confirmado correctamente'});
+        }else{
+            return res.status(500).json({ error: 'Ha habido un error durante la confirmación' });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido un error durante la confirmación' });
+    }
+}
+
 export {
     envioEmail,
     getUsers,
     loginUsuario,
-    crearUsuario
+    crearUsuario,
+    confirmarUsuario
 }

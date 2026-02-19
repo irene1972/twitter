@@ -35,6 +35,25 @@ export class User {
         }
     }
 
+    async getByToken(token){
+        
+        try {
+            const result = await pool.query('SELECT * FROM users WHERE remember_token=?',[token]);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async updateConfirmado(email){
+        try {
+            const result = await pool.query('UPDATE users SET confirmado=1,remember_token=null WHERE email=?',[email]);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
+
     async insert() {
         try {
             const result = await pool.query('INSERT INTO users (role,name,email,password,remember_token,created_at,updated_at) VALUES (?,?,?,?,?,?,?)', [

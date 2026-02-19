@@ -1,0 +1,7 @@
+.text-danger{
+    color:red;
+}
+.text-success{
+    background-color: green;
+    color:white !important;
+}
