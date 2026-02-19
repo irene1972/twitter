@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -58,7 +58,7 @@ export class Login {
             this.mensaje=data.mensaje;
             this.tipo=true;
             
-            localStorage.setItem('usuarioTwitter',JSON.stringify(data.email));
+            localStorage.setItem('usuarioTwitter',JSON.stringify({email:data.email,rol:data.rol,nombre:data.nombre}));
             this.router.navigate(['/home']);
           })
           .catch(error=>console.log(error))

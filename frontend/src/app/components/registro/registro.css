@@ -1,6 +1,9 @@
 section{
     padding: 2rem;
 }
+button{
+    margin-top: 1rem;
+}
 .text-danger{
     color:red;
 }
@@ -8,6 +11,6 @@ section{
     background-color: green;
     color:white !important;
 }
-button{
-    margin-top: 1rem;
+.registro{
+    padding-top: 1rem;
 }

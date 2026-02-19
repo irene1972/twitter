@@ -35,6 +35,16 @@ h2{
 ul{
     padding: 0 1rem;
 }
+.dropdown-menu{
+    background-color: black;
+}
+.dropdown-item:hover{
+    background-color: rgb(228, 220, 220);
+    color:black !important;
+}
+.dropdown-divider{
+    border-color: white;
+}
 @media screen and (max-width: 400px) {
     .contenedor-flex{
         display:block;

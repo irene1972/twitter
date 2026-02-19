@@ -48,7 +48,11 @@ const loginUsuario = async (req, res) => {
             const usuarioEncontrado = resultado[0][0];
             const matched = await matchPassword(password, usuarioEncontrado.password);
             if (matched) {
-                res.json({ mensaje: 'Usuario logueado correctamente', email });
+                res.json({  mensaje: 'Usuario logueado correctamente', 
+                            email,
+                            rol:usuarioEncontrado.role,
+                            nombre:usuarioEncontrado.name
+                         });
 
             } else {
                 return res.status(400).json({ error: 'El usuario o password no coinciden' });
