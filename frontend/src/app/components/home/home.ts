@@ -2,10 +2,11 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { isLogged } from '../../shared/utils/funciones';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

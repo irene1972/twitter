@@ -27,6 +27,9 @@
 .descripcion p{
     margin:0 0 0.5rem 0;
 }
+.descripcion span{
+    color:gray;
+}
 .card{
     margin:1rem 0;
 }
@@ -39,4 +42,8 @@
 }
 .pie img{
     margin-right:1rem;
+}
+a{
+    text-decoration: none;
+    color:black;
 }
