@@ -6,10 +6,12 @@ import { Registro } from './components/registro/registro';
 import { RegistroExitoso } from './components/registro-exitoso/registro-exitoso';
 import { Confirmar } from './components/confirmar/confirmar';
 import { Configuracion } from './components/configuracion/configuracion';
+import { SubirImagen } from './components/subir-imagen/subir-imagen';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
     {path:'home',component:Home},
+    {path:'subir-imagen',component:SubirImagen},
     {path:'configuracion',component:Configuracion},
     {path:'login',component:Login},
     {path:'registro',component:Registro},
