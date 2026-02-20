@@ -23,6 +23,20 @@ export class Image{
             return false;
         }
     }
+
+    async getById(id){
+        try {
+            const result=await pool.query(`
+                SELECT i.*,u.name,u.surname,u.nick,u.image  
+                    FROM images i 
+                    INNER JOIN users u ON u.id=i.user_id 
+                    WHERE i.id=?
+                `,[id]);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
     
     async insert() {
         try {

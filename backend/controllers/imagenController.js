@@ -16,6 +16,21 @@ const getImagenes = async (req, res) => {
 
 }
 
+const getImagenById=async(req,res)=>{
+    const id=req.params.id;
+    try {
+        const imagen=new Image();
+        const resultado=await imagen.getById(id);
+        if (resultado) {
+            res.json(resultado[0]);
+        } else {
+            return res.status(500).json({ error: 'Ha habido un error al consultar la base de datos' });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido un error al consultar los datos' });
+    }
+}
+
 const crearImagen = async (req, res) => {
     if (!req.file) {
         return res.status(500).json({ error: 'Solo se permiten imágenes JPG, JPEG, PNG o GIF' });
@@ -45,5 +60,6 @@ const crearImagen = async (req, res) => {
 
 export {
     getImagenes,
+    getImagenById,
     crearImagen
 }
