@@ -3,34 +3,34 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <!--@for(){-->
+                @for(elem of datos;track elem.id){
                 <div class="card pub-image">
                     <div class="card-header">
                         <div class="container-avatar">
-                            <img class="img-avatar" [src]="urlImgs+img" alt="imagen avatar">
+                            <img class="img-avatar" [src]="urlImgs+elem.image" alt="imagen avatar">
                         </div>
                         <div class="data-user">
-                            nombre + apellido del usuario
+                            {{elem.name}} {{elem.surname}}
                             <span class="nickname">
-                                | @ nickname
+                                | @ {{elem.nick}}
                             </span>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="image-container">
-                            <img [src]="urlImagenes+imagen" alt="imagen">
+                            <img [src]="urlImagenes+elem.image_path" alt="imagen">
                         </div>
                         <div class="likes">
 
                         </div>
                         <div class="descripcion">
-                            <span class="nick">@nickname</span>
-                            <p>Descripción de la foto</p>
+                            <span class="nick">@{{elem.nick}}</span>
+                            <p>{{elem.description}}</p>
                             
                         </div>
                     </div>
                 </div>
-                <!--}-->
+                }
             </div>
         </div>
     </div>

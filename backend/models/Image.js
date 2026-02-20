@@ -10,6 +10,19 @@ export class Image{
         this.updated_at=new Date();
     }
 
+    async getAll(){
+        try {
+            const result=await pool.query(`
+                SELECT i.*,u.name,u.surname,u.nick,u.image  
+                    FROM images i 
+                    INNER JOIN users u ON u.id=i.user_id 
+                    ORDER BY i.id DESC
+                `);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
     async insert() {
         try {
             const result = await pool.query('INSERT INTO images (user_id,image_path,description,created_at,updated_at) VALUES (?,?,?,?,?)', [

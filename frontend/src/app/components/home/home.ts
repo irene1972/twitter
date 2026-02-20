@@ -17,10 +17,11 @@ export class Home {
   urlImagenes: string = environment.imagesUrl2;
   img: string = '1771573567161-331283568.png';
   imagen: string = '1771584371475-950923000.png';
+  datos:any=[];
 
   constructor(private cd: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  async ngOnInit(){
     const usuarioString = localStorage.getItem('usuarioTwitter');
 
     if (!isLogged() || !usuarioString) {
@@ -37,6 +38,17 @@ export class Home {
         this.cd.detectChanges();
       }
     });
+
+    await fetch(`${environment.apiUrl}/imagenes/listar`)
+            .then(response=>response.json())
+            .then(data=>{
+              console.log(data);
+              this.datos=data;
+            })
+            .catch(error=>console.log(error))
+            .finally(()=>{
+              this.cd.detectChanges();
+            });
 
   }
 }
