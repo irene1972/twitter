@@ -18,6 +18,7 @@ export class Header {
   constructor(private router: Router){}
 
   ngOnInit(){
+    
     const usuarioString=localStorage.getItem('usuarioTwitter');
     if(isLogged() && usuarioString){
       this.usuario=JSON.parse(usuarioString);
@@ -29,6 +30,7 @@ export class Header {
 
   cerrarSesion(){
     localStorage.removeItem('usuarioTwitter');
+    //this.authService.logout();
     this.router.navigate(['/login']);
   }
 }
