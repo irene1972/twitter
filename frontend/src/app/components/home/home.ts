@@ -15,8 +15,7 @@ export class Home {
   tipo: boolean = false;
   urlImgs: string = environment.imagesUrl;
   urlImagenes: string = environment.imagesUrl2;
-  img: string = '1771573567161-331283568.png';
-  imagen: string = '1771584371475-950923000.png';
+  numComentarios: any[] = [];
   datos: any[] = [];
 
   //añadir paginación
@@ -50,7 +49,7 @@ export class Home {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        
+
         if (data.length === 0) {
           this.mensaje = 'No hay datos';
           this.tipo = true;
@@ -60,6 +59,9 @@ export class Home {
           //añadir paginación
           this.totalPaginas = Math.ceil(this.datos.length / this.itemsPorPagina);
           this.actualizarPaginacion();
+
+          //extraer num comentarios por imagen
+          this.numComentariosPorImagen();
         }
       })
       .catch(error => console.log(error))
@@ -87,5 +89,27 @@ export class Home {
       this.paginaActual++;
       this.actualizarPaginacion();
     }
+  }
+
+  numComentariosPorImagen() {
+    fetch(`${environment.apiUrl}/comentarios/num-comentarios`)
+      .then(response => response.json())
+      .then(data => {
+        this.numComentarios = data;
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        this.cd.detectChanges();
+      });
+  }
+
+  encontrarCantidad(id: number): number {
+    const encontrado = this.numComentarios.find(e => e.image_id === id);
+    if (encontrado) {
+      return encontrado.cantidad;
+    } else {
+      return 0;
+    }
+
   }
 }

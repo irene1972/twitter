@@ -23,6 +23,7 @@ export class Image{
             return false;
         }
     }
+    
     async insert() {
         try {
             const result = await pool.query('INSERT INTO images (user_id,image_path,description,created_at,updated_at) VALUES (?,?,?,?,?)', [
