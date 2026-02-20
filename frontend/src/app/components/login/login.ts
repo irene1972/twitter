@@ -58,7 +58,11 @@ export class Login {
             this.mensaje=data.mensaje;
             this.tipo=true;
             
-            localStorage.setItem('usuarioTwitter',JSON.stringify({email:data.email,rol:data.rol,nombre:data.nombre}));
+            localStorage.setItem('usuarioTwitter',JSON.stringify({
+              email:data.email,
+              rol:data.rol,
+              nombre:data.nombre
+            }));
             this.router.navigate(['/home']);
           })
           .catch(error=>console.log(error))

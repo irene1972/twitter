@@ -105,27 +105,8 @@ export class Configuracion {
       datos.email = this.miForm.value.email;
       datos.old_email = this.usuario.email;
 
-      fetch(`${environment.apiUrl}/usuarios/actualizar`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8'
-        },
-        body: JSON.stringify(datos)
-      })
-        .then(response => response.json())
-        .then(data => {
-          //console.log(data);
-          if (data.error) {
-            this.mensaje = data.error;
-            return;
-          }
-          this.mensaje = data.mensaje;
-          this.tipo = true;
-        })
-        .catch(error => console.log(error))
-        .finally(() => {
-          this.cd.detectChanges();
-        });
+      this.guardarUsuarioSinImagen(datos);
+
     } else {
       const formData = new FormData();
 
@@ -139,23 +120,8 @@ export class Configuracion {
       // archivo
       formData.append('imagen', this.imagenFile);
 
-      fetch(`${environment.apiUrl}/usuarios/actualizar-con-imagen`, {
-        method: 'PUT',
-        body: formData
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.error) {
-            this.mensaje = data.error;
-            return;
-          }
-          this.mensaje = data.mensaje;
-          this.tipo = true;
-        })
-        .catch(error => console.log(error))
-        .finally(() => {
-          this.cd.detectChanges();
-        });
+      this.guardarUsuarioConImagen(formData);
+
     }
 
   }
@@ -167,5 +133,67 @@ export class Configuracion {
       this.imagenFile = input.files[0];
       console.log(this.imagenFile);
     }
+  }
+
+  async guardarUsuarioSinImagen(datos: any) {
+    await fetch(`${environment.apiUrl}/usuarios/actualizar`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+      body: JSON.stringify(datos)
+    })
+      .then(response => response.json())
+      .then(data => {
+        //console.log(data);
+        if (data.error) {
+          this.mensaje = data.error;
+          return;
+        }
+        this.mensaje = data.mensaje;
+        this.tipo = true;
+        console.log(data);
+
+        //guardar los datos en el local storage
+        localStorage.setItem('usuarioTwitter',JSON.stringify({
+              email:data.email,
+              rol:data.rol,
+              nombre:data.nombre
+            }));
+
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        this.cd.detectChanges();
+      });
+  }
+
+  async guardarUsuarioConImagen(formData:FormData) {
+    await fetch(`${environment.apiUrl}/usuarios/actualizar-con-imagen`, {
+      method: 'PUT',
+      body: formData
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          this.mensaje = data.error;
+          return;
+        }
+        this.mensaje = data.mensaje;
+        this.tipo = true;
+
+        //guardar los datos en el local storage
+        localStorage.setItem('usuarioTwitter',JSON.stringify({
+              email:data.email,
+              rol:data.rol,
+              nombre:data.nombre,
+              imagen:data.imagen
+            }));
+
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        this.cd.detectChanges();
+      });
   }
 }

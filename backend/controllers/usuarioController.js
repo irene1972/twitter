@@ -164,11 +164,20 @@ const updateUsuario = async (req, res) => {
     try {
 
         const usuario = new User();
+
+        const usuarioRecuperado=await usuario.getByEmail(old_email);
+        
+        
         const resultado = await usuario.updateByEmail(nick, nombre, apellido, email, old_email);
 
         if (resultado) {
             if (resultado[0].affectedRows > 0) {
-                res.json({ mensaje: 'Actualizado correctamente' });
+                res.json({ 
+                    mensaje: 'Actualizado correctamente',
+                    email,
+                    rol:usuarioRecuperado[0][0].role,
+                    nombre
+                });
             } else {
                 return res.status(500).json({ error: 'Ha habido un error durante la actualización de la bd' });
             }
@@ -193,11 +202,20 @@ const updateUsuarioConImagen = async (req, res) => {
     try {
 
         const usuario = new User();
+
+        const usuarioRecuperado=await usuario.getByEmail(old_email);
+
         const resultado = await usuario.updateByEmailConImagen(nick, nombre, apellido, email,imagen, old_email);
 
         if (resultado) {
             if (resultado[0].affectedRows > 0) {
-                res.json({ mensaje: 'Actualizado correctamente' });
+                res.json({ 
+                    mensaje: 'Actualizado correctamente',
+                    email,
+                    rol:usuarioRecuperado[0][0].role,
+                    nombre,
+                    imagen
+                });
             } else {
                 return res.status(500).json({ error: 'Ha habido un error durante la actualización de la bd' });
             }
