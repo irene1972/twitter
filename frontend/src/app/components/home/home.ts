@@ -17,11 +17,18 @@ export class Home {
   urlImagenes: string = environment.imagesUrl2;
   img: string = '1771573567161-331283568.png';
   imagen: string = '1771584371475-950923000.png';
-  datos:any=[];
+  datos: any[] = [];
+
+  //añadir paginación
+  datosPaginados: any[] = [];
+
+  paginaActual: number = 1;
+  itemsPorPagina: number = 5;
+  totalPaginas: number = 0;
 
   constructor(private cd: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) { }
 
-  async ngOnInit(){
+  async ngOnInit() {
     const usuarioString = localStorage.getItem('usuarioTwitter');
 
     if (!isLogged() || !usuarioString) {
@@ -40,15 +47,45 @@ export class Home {
     });
 
     await fetch(`${environment.apiUrl}/imagenes/listar`)
-            .then(response=>response.json())
-            .then(data=>{
-              console.log(data);
-              this.datos=data;
-            })
-            .catch(error=>console.log(error))
-            .finally(()=>{
-              this.cd.detectChanges();
-            });
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        
+        if (data.length === 0) {
+          this.mensaje = 'No hay datos';
+          this.tipo = true;
+        } else {
+          this.datos = data;
 
+          //añadir paginación
+          this.totalPaginas = Math.ceil(this.datos.length / this.itemsPorPagina);
+          this.actualizarPaginacion();
+        }
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        this.cd.detectChanges();
+      });
+
+  }
+
+  actualizarPaginacion() {
+    const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
+    const fin = inicio + this.itemsPorPagina;
+    this.datosPaginados = this.datos.slice(inicio, fin);
+  }
+
+  paginaAnterior() {
+    if (this.paginaActual > 1) {
+      this.paginaActual--;
+      this.actualizarPaginacion();
+    }
+  }
+
+  paginaSiguiente() {
+    if (this.paginaActual < this.totalPaginas) {
+      this.paginaActual++;
+      this.actualizarPaginacion();
+    }
   }
 }

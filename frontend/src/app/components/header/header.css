@@ -5,7 +5,8 @@ a{
 }
 img{
     width: 3rem;
-    border-radius: 50%;
+    height: 3rem;
+    border-radius: 100%;
 }
 .contenedor-flex{
     display: flex;
