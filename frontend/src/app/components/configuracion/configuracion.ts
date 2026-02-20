@@ -87,6 +87,8 @@ export class Configuracion {
           this.cd.detectChanges();
         });
 
+    }else{
+      this.router.navigate(['/home']);
     }
   }
 
@@ -158,7 +160,8 @@ export class Configuracion {
         localStorage.setItem('usuarioTwitter',JSON.stringify({
               email:data.email,
               rol:data.rol,
-              nombre:data.nombre
+              nombre:data.nombre,
+              imagen:data.imagen
             }));
 
       })

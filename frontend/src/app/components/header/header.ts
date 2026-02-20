@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { isLogged } from '../../shared/utils/funciones';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -11,11 +12,18 @@ import { FormsModule } from '@angular/forms';
 })
 export class Header {
   usuario:any={};
+  urlImgs: string = environment.imagesUrl;
+  img:string='';
+
   constructor(private router: Router){}
 
   ngOnInit(){
     const usuarioString=localStorage.getItem('usuarioTwitter');
-    if(isLogged() && usuarioString) this.usuario=JSON.parse(usuarioString);
+    if(isLogged() && usuarioString){
+      this.usuario=JSON.parse(usuarioString);
+      console.log(this.usuario);
+      this.img=this.usuario.imagen;
+    }
     
   }
 

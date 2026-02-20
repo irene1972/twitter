@@ -176,7 +176,8 @@ const updateUsuario = async (req, res) => {
                     mensaje: 'Actualizado correctamente',
                     email,
                     rol:usuarioRecuperado[0][0].role,
-                    nombre
+                    nombre,
+                    imagen:usuarioRecuperado[0][0].image
                 });
             } else {
                 return res.status(500).json({ error: 'Ha habido un error durante la actualización de la bd' });

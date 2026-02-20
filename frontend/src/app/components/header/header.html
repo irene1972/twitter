@@ -5,6 +5,9 @@
             @if(usuario.email){
             <li><a [routerLink]="['/home']" routerLinkActive="activo">Inicio</a></li>
             <li><a [routerLink]="['/home']" routerLinkActive="activo">Subir imagen</a></li>
+            @if(img){
+                <li><img [src]="urlImgs+img" alt="imagen usuario"></li>
+            }
             <li>
                 <div class="btn-group">
                     <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
