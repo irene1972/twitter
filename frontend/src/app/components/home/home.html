@@ -20,20 +20,27 @@
                         <div class="image-container">
                             <img [src]="urlImagenes+elem.image_path" alt="imagen">
                         </div>
-                        <div class="likes">
 
-                        </div>
                         <div class="descripcion">
                             <span class="nick">@{{elem.nick}}</span>
                             <p>{{elem.description}}</p>
-                            
+                        </div>
+                        <div class="pie">
+                            <div class="likes">
+                                <img src="hearts-gray.png" alt="heart gray">
+                            </div>
+                            <div class="comentarios">
+                                <a href="" class="btn btn-sm btn-warning btn-comentarios">
+                                    Comentarios()
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
                 }
             </div>
         </div>
-         <!-- Añadir paginación -->
+        <!-- Añadir paginación -->
         <div class="paginacion">
             <button (click)="paginaAnterior()" [disabled]="paginaActual === 1">
                 ⬅ Anterior
