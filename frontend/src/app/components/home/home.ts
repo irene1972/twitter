@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { isLogged } from '../../shared/utils/funciones';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,12 @@ import { environment } from '../../../environments/environment';
   styleUrl: './home.css',
 })
 export class Home {
-   ngOnInit(): void {
-    //console.log(environment.apiUrl);
+
+  constructor(private router: Router){}
+
+  ngOnInit(): void {
+    const usuarioString = localStorage.getItem('usuarioTwitter');
+
+    if (!isLogged() || !usuarioString) this.router.navigate(['/login']);
   }
 }

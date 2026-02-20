@@ -50,7 +50,7 @@ export class Login {
         })
           .then(response=>response.json())
           .then(data=>{
-            //console.log(data);
+            console.log(data);
             if(data.error){
               this.mensaje=data.error;
               return;
@@ -61,7 +61,8 @@ export class Login {
             localStorage.setItem('usuarioTwitter',JSON.stringify({
               email:data.email,
               rol:data.rol,
-              nombre:data.nombre
+              nombre:data.nombre,
+              imagen:data.imagen
             }));
             this.router.navigate(['/home']);
           })

@@ -9,7 +9,7 @@ button{
 }
 .text-success{
     background-color: green;
-    color:white;
+    color:white !important;
 }
 .login{
     padding-top: 1rem;

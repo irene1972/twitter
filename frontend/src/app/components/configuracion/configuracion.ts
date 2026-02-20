@@ -88,7 +88,7 @@ export class Configuracion {
         });
 
     }else{
-      this.router.navigate(['/home']);
+      this.router.navigate(['/login']);
     }
   }
 

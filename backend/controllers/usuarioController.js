@@ -67,16 +67,20 @@ const loginUsuario = async (req, res) => {
             }
             const usuarioEncontrado = resultado[0][0];
             const matched = await matchPassword(password, usuarioEncontrado.password);
-            if (matched) {
-                res.json({
-                    mensaje: 'Usuario logueado correctamente',
-                    email,
-                    rol: usuarioEncontrado.role,
-                    nombre: usuarioEncontrado.name
-                });
-
+            if (usuarioEncontrado.confirmado !== 1) {
+                return res.status(400).json({ error: 'El usuario no ha confirmado su cuenta' });
             } else {
-                return res.status(400).json({ error: 'El usuario o password no coinciden' });
+                if (matched) {
+                    res.json({
+                        mensaje: 'Usuario logueado correctamente',
+                        email,
+                        rol: usuarioEncontrado.role,
+                        nombre: usuarioEncontrado.name,
+                        imagen: usuarioEncontrado.image
+                    });
+                } else {
+                    return res.status(400).json({ error: 'El usuario o password no coinciden' });
+                }
             }
 
         } else {
@@ -165,19 +169,19 @@ const updateUsuario = async (req, res) => {
 
         const usuario = new User();
 
-        const usuarioRecuperado=await usuario.getByEmail(old_email);
-        
-        
+        const usuarioRecuperado = await usuario.getByEmail(old_email);
+
+
         const resultado = await usuario.updateByEmail(nick, nombre, apellido, email, old_email);
 
         if (resultado) {
             if (resultado[0].affectedRows > 0) {
-                res.json({ 
+                res.json({
                     mensaje: 'Actualizado correctamente',
                     email,
-                    rol:usuarioRecuperado[0][0].role,
+                    rol: usuarioRecuperado[0][0].role,
                     nombre,
-                    imagen:usuarioRecuperado[0][0].image
+                    imagen: usuarioRecuperado[0][0].image
                 });
             } else {
                 return res.status(500).json({ error: 'Ha habido un error durante la actualización de la bd' });
@@ -195,7 +199,7 @@ const updateUsuario = async (req, res) => {
 const updateUsuarioConImagen = async (req, res) => {
     const { nick, nombre, apellido, email, old_email } = req.body;
     const imagen = req.file.filename;
-    
+
     if (!nick || !nombre || !apellido || !email || !old_email) {
         return res.status(400).json({ error: 'Todos los campos son obligatorios' });
     }
@@ -204,16 +208,16 @@ const updateUsuarioConImagen = async (req, res) => {
 
         const usuario = new User();
 
-        const usuarioRecuperado=await usuario.getByEmail(old_email);
+        const usuarioRecuperado = await usuario.getByEmail(old_email);
 
-        const resultado = await usuario.updateByEmailConImagen(nick, nombre, apellido, email,imagen, old_email);
+        const resultado = await usuario.updateByEmailConImagen(nick, nombre, apellido, email, imagen, old_email);
 
         if (resultado) {
             if (resultado[0].affectedRows > 0) {
-                res.json({ 
+                res.json({
                     mensaje: 'Actualizado correctamente',
                     email,
-                    rol:usuarioRecuperado[0][0].role,
+                    rol: usuarioRecuperado[0][0].role,
                     nombre,
                     imagen
                 });
