@@ -12,6 +12,34 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  fileFilter: (req, file, cb) => {
+
+    const allowedMimeTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/gif'
+    ];
+
+    const allowedExtensions = [
+      '.jpg',
+      '.jpeg',
+      '.png',
+      '.gif'
+    ];
+
+    const ext = path.extname(file.originalname).toLowerCase();
+
+    if (
+      allowedMimeTypes.includes(file.mimetype) &&
+      allowedExtensions.includes(ext)
+    ) {
+      cb(null, true);
+    } else {
+      cb(new Error('Solo se permiten imágenes JPG'));
+    }
+  }
+});
 
 export default upload;
