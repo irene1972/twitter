@@ -7,7 +7,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 col-form-label text-md-right" for="imagen">Imagen</label>
                     <div class="col-md-7">
-                        <input type="file" id="imagen" class="form-control"  formControlName="imagen">
+                        <input type="file" id="imagen" class="form-control"  formControlName="imagen"  (change)="onFileSelected($event)">
                         @if(imagen?.touched && imagen?.hasError('required')){
                         <div class="text-danger">El campo es requerido</div>
                         }

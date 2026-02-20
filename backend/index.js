@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import usuarioRoutes from './routes/usuarioRoutes.js';
+import imagenRoutes from './routes/imagenRoutes.js';
 /*
 const corsOptions ={
    origin:'*', 
@@ -29,6 +30,7 @@ app.use(express.json());
 dotenv.config();
 
 app.use('/api/usuarios',usuarioRoutes);
+app.use('/api/imagenes',imagenRoutes);
 app.use('/imgs', express.static('public/imgs'));
 
 const PORT=process.env.PORT || 3000;
