@@ -32,6 +32,7 @@ dotenv.config();
 app.use('/api/usuarios',usuarioRoutes);
 app.use('/api/imagenes',imagenRoutes);
 app.use('/imgs', express.static('public/imgs'));
+app.use('/imagenes', express.static('public/imagenes'));
 
 const PORT=process.env.PORT || 3000;
 

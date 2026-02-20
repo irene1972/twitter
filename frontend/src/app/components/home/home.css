@@ -1,0 +1,25 @@
+.text-danger{
+    color:red;
+}
+.text-success{
+    background-color: green;
+    color:white !important;
+}
+.card-header{
+    display: flex;
+    align-items: center;
+}
+.img-avatar{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+.data-user{
+    margin-left: 1rem;
+}
+.nickname{
+    color:gray;
+}
+.descripcion{
+    padding: 0.5rem;
+}

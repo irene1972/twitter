@@ -96,8 +96,10 @@ export class SubirImagen {
         }
         this.mensaje = data.mensaje;
         this.tipo = true;
-        //console.log(data);
-        this.miForm.reset();
+        
+        this.router.navigate(['/home'],{
+          queryParams:{code:1}
+        });
 
       })
       .catch(error => console.log(error))
