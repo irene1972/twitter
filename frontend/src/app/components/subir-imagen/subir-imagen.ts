@@ -91,6 +91,7 @@ export class SubirImagen {
       .then(data => {
         if (data.error) {
           this.mensaje = data.error;
+          this.tipo=false;
           return;
         }
         this.mensaje = data.mensaje;

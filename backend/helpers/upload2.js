@@ -37,7 +37,8 @@ const upload = multer({
     ) {
       cb(null, true);
     } else {
-      cb(new Error('Solo se permiten imágenes JPG'));
+      //cb(new Error('Solo se permiten imágenes JPG, JPEG, PNG o GIF'));
+      cb(null,false)
     }
   }
 });
