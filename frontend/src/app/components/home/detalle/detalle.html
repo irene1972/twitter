@@ -30,9 +30,15 @@
                                 <img src="hearts-gray.png" alt="heart gray">
                             </div>
                             <div class="comentarios">
-                                <a href="" class="btn btn-sm btn-warning btn-comentarios">
-                                    Comentarios({{encontrarCantidad(datos.id)}})
-                                </a>
+                                <h2>Comentarios({{encontrarCantidad(datos.id)}})</h2>
+                                <hr>
+                                <form action="">
+                                    <input type="hidden" name="" id="image_id" value="datos.id">
+                                    <p>
+                                        <textarea name="" id="content" class="form-control"></textarea>
+                                    </p>
+                                    <button class="btn btn-success" type="submit">Enviar</button>
+                                </form>
                             </div>
                         </div>
                     </div>

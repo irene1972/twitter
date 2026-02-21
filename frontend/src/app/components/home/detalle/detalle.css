@@ -30,16 +30,18 @@
 .descripcion span{
     color:gray;
 }
+.comentarios h2{
+    font-size: 1.5rem;
+}
 .card{
     margin:1rem 0;
 }
 .likes img{
     width: 20px;
 }
-.pie{
-    display: flex;
-    align-items: center;
-}
 .pie img{
     margin-right:1rem;
+}
+.pub-image{
+    padding: 1rem;
 }
