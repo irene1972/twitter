@@ -50,4 +50,13 @@ export class Comment{
             return false;
         }
     }
+
+    async deleteComment(id){
+        try {
+            const result=await pool.query('DELETE FROM comments WHERE id=?',[id]);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
 }

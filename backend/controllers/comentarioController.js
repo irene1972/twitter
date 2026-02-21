@@ -56,8 +56,24 @@ const crearComentario = async (req, res) => {
     }
 }
 
+const eliminarComentario = async (req, res) => {
+    const id=req.params.id;
+    try {
+        const comentario = new Comment();
+        const resultado = await comentario.deleteComment(id);
+        if (resultado) {
+            res.json({mensaje:'El comentario se ha eliminado correctamente'});
+        } else {
+            return res.status(500).json({ error: 'Ha habido un error al consultar la base de datos' });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido un error al eliminar los datos' });
+    }
+}
+
 export {
     getComentarios,
     getComentariosPorImagenes,
-    crearComentario
+    crearComentario,
+    eliminarComentario
 }

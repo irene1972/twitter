@@ -45,11 +45,16 @@
                                 </form>
                                 <hr>
                                 @for(comentario of comentarios;track comentario.id){
-                                    <div class="comentario">
-                                        <span class="nick">@{{comentario.nick}}</span> | <span>{{comentario.created_at | date:
-                                            'dd/MM/yyyy' }}</span>
-                                        <p>{{comentario.content}}</p>
-                                    </div>
+                                <div class="comentario">
+                                    <span class="nick">@{{comentario.nick}}</span> | <span>{{comentario.created_at |
+                                        date:
+                                        'dd/MM/yyyy' }}</span>
+                                    <p>{{comentario.content}}<br>hola{{usuarioLogueado.id}}
+                                        @if(usuarioLogueado.id===datos.user_id || usuarioLogueado.id===comentario.user_id){
+                                            <a class="btn btn-sm btn-danger" (click)="eliminarComentario(comentario.id)">Eliminar</a>
+                                        }
+                                    </p>
+                                </div>
                                 }
                             </div>
                         </div>

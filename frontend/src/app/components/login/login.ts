@@ -59,6 +59,7 @@ export class Login {
             this.tipo=true;
             
             localStorage.setItem('usuarioTwitter',JSON.stringify({
+              id:data.id,
               email:data.email,
               rol:data.rol,
               nombre:data.nombre,

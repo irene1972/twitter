@@ -76,7 +76,8 @@ const loginUsuario = async (req, res) => {
                         email,
                         rol: usuarioEncontrado.role,
                         nombre: usuarioEncontrado.name,
-                        imagen: usuarioEncontrado.image
+                        imagen: usuarioEncontrado.image,
+                        id:usuarioEncontrado.id
                     });
                 } else {
                     return res.status(400).json({ error: 'El usuario o password no coinciden' });
@@ -181,7 +182,8 @@ const updateUsuario = async (req, res) => {
                     email,
                     rol: usuarioRecuperado[0][0].role,
                     nombre,
-                    imagen: usuarioRecuperado[0][0].image
+                    imagen: usuarioRecuperado[0][0].image,
+                    id: usuarioRecuperado[0][0].id
                 });
             } else {
                 return res.status(500).json({ error: 'Ha habido un error durante la actualización de la bd' });
@@ -219,7 +221,8 @@ const updateUsuarioConImagen = async (req, res) => {
                     email,
                     rol: usuarioRecuperado[0][0].role,
                     nombre,
-                    imagen
+                    imagen,
+                    id: usuarioRecuperado[0][0].id,
                 });
             } else {
                 return res.status(500).json({ error: 'Ha habido un error durante la actualización de la bd' });

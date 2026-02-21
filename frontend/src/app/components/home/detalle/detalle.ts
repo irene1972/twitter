@@ -62,7 +62,7 @@ export class Detalle {
             this.tipo = true;
           } else {
             this.datos = data[0];
-            //console.log(this.datos);
+            console.log('datos: ', this.datos);
             //extraer num comentarios por imagen
             this.numComentariosPorImagen();
 
@@ -118,7 +118,7 @@ export class Detalle {
       .then(response => response.json())
       .then(data => {
         this.comentarios = data;
-        console.log(data);
+        console.log('comentarios: ', data);
       })
       .catch(error => console.log(error))
       .finally(() => {
@@ -153,12 +153,36 @@ export class Detalle {
             }
             this.mensaje = data.mensaje;
             this.tipo = true;
-            this.miForm.reset();
+            //this.miForm.reset();
+            //this.router.navigate(['/detalle/',this.datos.id]);
+            location.reload();
           })
           .catch(error => console.log(error))
           .finally(() => {
             this.cd.detectChanges();
           });
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        this.cd.detectChanges();
+      });
+  }
+
+  eliminarComentario(id: number) {
+    fetch(`${environment.apiUrl}/comentarios/eliminar/${id}`, {
+      method: 'DELETE'
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          this.mensaje = data.error;
+          return;
+        }
+        this.mensaje = data.mensaje;
+        this.tipo = true;
+
+        location.reload();
+        //this.router.navigate(['/detalle/',this.datos.id]);
       })
       .catch(error => console.log(error))
       .finally(() => {

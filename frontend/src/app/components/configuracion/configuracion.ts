@@ -87,7 +87,7 @@ export class Configuracion {
           this.cd.detectChanges();
         });
 
-    }else{
+    } else {
       this.router.navigate(['/login']);
     }
   }
@@ -157,12 +157,13 @@ export class Configuracion {
         console.log(data);
 
         //guardar los datos en el local storage
-        localStorage.setItem('usuarioTwitter',JSON.stringify({
-              email:data.email,
-              rol:data.rol,
-              nombre:data.nombre,
-              imagen:data.imagen
-            }));
+        localStorage.setItem('usuarioTwitter', JSON.stringify({
+          id: data.id,
+          email: data.email,
+          rol: data.rol,
+          nombre: data.nombre,
+          imagen: data.imagen
+        }));
 
       })
       .catch(error => console.log(error))
@@ -171,7 +172,7 @@ export class Configuracion {
       });
   }
 
-  async guardarUsuarioConImagen(formData:FormData) {
+  async guardarUsuarioConImagen(formData: FormData) {
     await fetch(`${environment.apiUrl}/usuarios/actualizar-con-imagen`, {
       method: 'PUT',
       body: formData
@@ -186,12 +187,13 @@ export class Configuracion {
         this.tipo = true;
 
         //guardar los datos en el local storage
-        localStorage.setItem('usuarioTwitter',JSON.stringify({
-              email:data.email,
-              rol:data.rol,
-              nombre:data.nombre,
-              imagen:data.imagen
-            }));
+        localStorage.setItem('usuarioTwitter', JSON.stringify({
+          id:data.id,
+          email: data.email,
+          rol: data.rol,
+          nombre: data.nombre,
+          imagen: data.imagen
+        }));
 
       })
       .catch(error => console.log(error))
