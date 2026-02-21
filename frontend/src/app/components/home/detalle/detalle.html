@@ -1,7 +1,7 @@
 <section>
     <div [class.text-danger]="tipo===false" [class.text-success]="tipo===true">{{mensaje}}</div>
     <div class="container">
-        
+
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card pub-image">
@@ -22,7 +22,8 @@
                         </div>
 
                         <div class="descripcion">
-                            <span class="nick">@{{datos.nick}}</span> | <span>{{datos.created_at | date: 'dd/MM/yyyy' }}</span>
+                            <span class="nick">@{{datos.nick}}</span> | <span>{{datos.created_at | date: 'dd/MM/yyyy'
+                                }}</span>
                             <p>{{datos.description}}</p>
                         </div>
                         <div class="pie">
@@ -32,20 +33,30 @@
                             <div class="comentarios">
                                 <h2>Comentarios({{encontrarCantidad(datos.id)}})</h2>
                                 <hr>
-                                <div [class.text-danger]="tipo===false" [class.text-success]="tipo===true">{{mensaje}}</div>
+                                <div [class.text-danger]="tipo===false" [class.text-success]="tipo===true">{{mensaje}}
+                                </div>
                                 <form [formGroup]="miForm" (ngSubmit)="cargarDatos()">
                                     <input type="hidden" formControlName="image_id" id="image_id" [value]="datos.id">
                                     <p>
-                                        <textarea formControlName="content" id="content" class="form-control"></textarea>
+                                        <textarea formControlName="content" id="content"
+                                            class="form-control"></textarea>
                                     </p>
                                     <button class="btn btn-success" type="submit">Enviar</button>
                                 </form>
+                                <hr>
+                                @for(comentario of comentarios;track comentario.id){
+                                    <div class="comentario">
+                                        <span class="nick">@{{comentario.nick}}</span> | <span>{{comentario.created_at | date:
+                                            'dd/MM/yyyy' }}</span>
+                                        <p>{{comentario.content}}</p>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-       
+
     </div>
 </section>

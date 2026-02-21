@@ -10,6 +10,21 @@ export class Comment{
         this.updated_at=new Date();
     }
 
+    async getAll(image_id){
+        try {
+            const result=await pool.query(`
+                SELECT c.*, u.nick 
+                    FROM comments c 
+                    INNER JOIN users u ON u.id=c.user_id 
+					WHERE c.image_id=? 
+                    ORDER BY id DESC 
+                `,[image_id]);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
+
     async getCommentsByImg(){
         try {
             const result=await pool.query(`

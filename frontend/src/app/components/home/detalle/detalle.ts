@@ -7,7 +7,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
 @Component({
   selector: 'app-detalle',
-  imports: [ReactiveFormsModule,DatePipe],
+  imports: [ReactiveFormsModule, DatePipe],
   templateUrl: './detalle.html',
   styleUrl: './detalle.css',
 })
@@ -17,6 +17,9 @@ export class Detalle {
   tipo: boolean = false;
   urlImgs: string = environment.imagesUrl;
   urlImagenes: string = environment.imagesUrl2;
+  usuarioLogueado: any = {};
+  usuario: any = {};
+  comentarios: any[] = [];
   numComentarios: any[] = [];
   datos: any = {};
 
@@ -43,10 +46,12 @@ export class Detalle {
       return;
     }
 
+    this.usuarioLogueado = JSON.parse(usuarioString);
+
     //recuperar parámetro de la url
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
-      console.log(id);
+      //console.log(id);
 
       fetch(`${environment.apiUrl}/imagenes/detalle/${id}`)
         .then(response => response.json())
@@ -57,9 +62,12 @@ export class Detalle {
             this.tipo = true;
           } else {
             this.datos = data[0];
-            console.log(this.datos);
+            //console.log(this.datos);
             //extraer num comentarios por imagen
             this.numComentariosPorImagen();
+
+            //consultar comentarios para mostrarlos
+            this.consultarComentarios();
           }
         })
         .catch(error => console.log(error))
@@ -76,34 +84,11 @@ export class Detalle {
       this.miForm.markAllAsTouched();
       return;
     }
-    console.log(this.miForm.value);
-    const comentario:any={}
-    comentario.content=this.miForm.value.content;
-    comentario.image_id=this.datos.id;
-    comentario.user_id=this.datos.user_id;
+    //console.log(this.miForm.value);
 
-    fetch(`${environment.apiUrl}/comentarios/crear`,{
-                method:'POST',
-                headers:{
-                  'Content-Type': 'application/json; charset=UTF-8'
-                },
-                body:JSON.stringify(comentario)
-              })
-                .then(response=>response.json())
-                .then(data=>{
-                  console.log(data);
-                  if(data.error){
-                    this.mensaje=data.error;
-                    return;
-                  }
-                  this.mensaje=data.mensaje;
-                  this.tipo=true;
-                  this.miForm.reset();
-                })
-                .catch(error=>console.log(error))
-                .finally(()=>{
-                  this.cd.detectChanges();
-                });
+
+    const user = this.consultarUsuarioYGuardarComentario(this.usuarioLogueado.email);
+
   }
 
   numComentariosPorImagen() {
@@ -126,5 +111,58 @@ export class Detalle {
       return 0;
     }
 
+  }
+
+  consultarComentarios() {
+    fetch(`${environment.apiUrl}/comentarios/listar/${this.datos.id}`)
+      .then(response => response.json())
+      .then(data => {
+        this.comentarios = data;
+        console.log(data);
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        this.cd.detectChanges();
+      });
+  }
+
+  consultarUsuarioYGuardarComentario(email: string) {
+    fetch(`${environment.apiUrl}/usuarios/obtener/${email}`)
+      .then(response => response.json())
+      .then(data => {
+        this.usuario = data;
+
+        const comentario: any = {}
+        comentario.content = this.miForm.value.content;
+        comentario.image_id = this.datos.id;
+        comentario.user_id = this.usuario.id;
+
+        fetch(`${environment.apiUrl}/comentarios/crear`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+          },
+          body: JSON.stringify(comentario)
+        })
+          .then(response => response.json())
+          .then(data => {
+            //console.log(data);
+            if (data.error) {
+              this.mensaje = data.error;
+              return;
+            }
+            this.mensaje = data.mensaje;
+            this.tipo = true;
+            this.miForm.reset();
+          })
+          .catch(error => console.log(error))
+          .finally(() => {
+            this.cd.detectChanges();
+          });
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        this.cd.detectChanges();
+      });
   }
 }
