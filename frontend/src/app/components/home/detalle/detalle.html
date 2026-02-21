@@ -32,10 +32,11 @@
                             <div class="comentarios">
                                 <h2>Comentarios({{encontrarCantidad(datos.id)}})</h2>
                                 <hr>
-                                <form action="">
-                                    <input type="hidden" name="" id="image_id" value="datos.id">
+                                <div [class.text-danger]="tipo===false" [class.text-success]="tipo===true">{{mensaje}}</div>
+                                <form [formGroup]="miForm" (ngSubmit)="cargarDatos()">
+                                    <input type="hidden" formControlName="image_id" id="image_id" [value]="datos.id">
                                     <p>
-                                        <textarea name="" id="content" class="form-control"></textarea>
+                                        <textarea formControlName="content" id="content" class="form-control"></textarea>
                                     </p>
                                     <button class="btn btn-success" type="submit">Enviar</button>
                                 </form>

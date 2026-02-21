@@ -16,6 +16,27 @@ const getComentariosPorImagenes = async (req, res) => {
 
 }
 
+const crearComentario = async (req, res) => {
+    const { content, image_id, user_id } = req.body;
+    
+    try {
+        const comentario = new Comment(user_id, image_id, content);
+        const resultado = await comentario.insertComment();
+        if (resultado) {
+            if (resultado[0].affectedRows === 1) {
+                res.json({ mensaje: 'Comentario guardado correctamente' });
+            } else {
+                return res.status(500).json({ error: 'Ha habido un error al insertar los datos en la bd' });
+            }
+        } else {
+            return res.status(500).json({ error: 'Ha habido un error al insertar los datos en la bd' });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido un error al insertar los datos' });
+    }
+}
+
 export {
-    getComentariosPorImagenes
+    getComentariosPorImagenes,
+    crearComentario
 }

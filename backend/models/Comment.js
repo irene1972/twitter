@@ -24,4 +24,15 @@ export class Comment{
             return false;
         }
     }
+
+    async insertComment(){
+        try {
+            const result=await pool.query(`INSERT INTO comments (user_id,image_id,content,created_at,updated_at) VALUES (?,?,?,?,?)`,[
+                this.user_id,this.image_id,this.content,this.created_at,this.updated_at
+            ]);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
 }

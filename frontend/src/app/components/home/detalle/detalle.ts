@@ -3,10 +3,11 @@ import { environment } from '../../../../environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isLogged } from '../../../shared/utils/funciones';
 import { DatePipe } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-detalle',
-  imports: [DatePipe],
+  imports: [ReactiveFormsModule,DatePipe],
   templateUrl: './detalle.html',
   styleUrl: './detalle.css',
 })
@@ -19,7 +20,20 @@ export class Detalle {
   numComentarios: any[] = [];
   datos: any = {};
 
-  constructor(private cd: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) { }
+  miForm: FormGroup;
+
+  constructor(private cd: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) {
+    this.miForm = new FormGroup({
+      content: new FormControl('', [
+        Validators.required
+      ]),
+      image_id: new FormControl('', [])
+    }, []);
+  }
+
+  get content() {
+    return this.miForm.get('content');
+  }
 
   async ngOnInit() {
     const usuarioString = localStorage.getItem('usuarioTwitter');
@@ -43,7 +57,7 @@ export class Detalle {
             this.tipo = true;
           } else {
             this.datos = data[0];
-            console.log(this.datos[0]);
+            console.log(this.datos);
             //extraer num comentarios por imagen
             this.numComentariosPorImagen();
           }
@@ -55,6 +69,41 @@ export class Detalle {
 
     });
 
+  }
+
+  cargarDatos() {
+    if (!this.miForm.valid) {
+      this.miForm.markAllAsTouched();
+      return;
+    }
+    console.log(this.miForm.value);
+    const comentario:any={}
+    comentario.content=this.miForm.value.content;
+    comentario.image_id=this.datos.id;
+    comentario.user_id=this.datos.user_id;
+
+    fetch(`${environment.apiUrl}/comentarios/crear`,{
+                method:'POST',
+                headers:{
+                  'Content-Type': 'application/json; charset=UTF-8'
+                },
+                body:JSON.stringify(comentario)
+              })
+                .then(response=>response.json())
+                .then(data=>{
+                  console.log(data);
+                  if(data.error){
+                    this.mensaje=data.error;
+                    return;
+                  }
+                  this.mensaje=data.mensaje;
+                  this.tipo=true;
+                  this.miForm.reset();
+                })
+                .catch(error=>console.log(error))
+                .finally(()=>{
+                  this.cd.detectChanges();
+                });
   }
 
   numComentariosPorImagen() {
