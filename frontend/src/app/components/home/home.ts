@@ -147,12 +147,74 @@ export class Home {
     }
   }
 
-  haceMatchLaImagen(id:number):boolean{
+  haceMatchLaImagen(id:number):number{
     const encontrado=this.likes.find((elem:any)=>elem.image_id===id);
     if(encontrado){
-      return true;
+      return encontrado.id;
     }else{
-      return false;
+      return 0;
+    }
+  }
+
+  like(event:Event,image_id:number){
+    const imagen=event.target as HTMLImageElement;
+    const like_id=parseInt(imagen.id);
+    if(like_id===0){
+      const datos:any={};
+      datos.image_id=image_id;
+      datos.user_id=this.usuarioLogueado.id;
+      //crear el like en la base de datos
+      fetch(`${environment.apiUrl}/likes/crear`,{
+        method:'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+          },
+        body: JSON.stringify(datos)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        if(data.error){
+          this.mensaje=data.error;
+          return;
+        }
+        this.mensaje=data.mensaje;
+        this.tipo=true;
+
+        location.reload();
+        
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        this.cd.detectChanges();
+      });
+    }
+
+  }
+
+  dislike(event:Event){
+    const imagen=event.target as HTMLImageElement;
+    const like_id=parseInt(imagen.id);
+    if(like_id>0){
+      //eliminar el like de la base de datos
+      fetch(`${environment.apiUrl}/likes/eliminar/${like_id}`,{
+        method:'DELETE'
+      })
+      .then(response => response.json())
+      .then(data => {
+        if(data.error){
+          this.mensaje=data.error;
+          return;
+        }
+        this.mensaje=data.mensaje;
+        this.tipo=true;
+
+        location.reload();
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        this.cd.detectChanges();
+      });
     }
   }
 }

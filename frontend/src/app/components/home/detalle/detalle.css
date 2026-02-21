@@ -1,3 +1,6 @@
+h2{
+    font-size: 1rem;
+}
 .text-danger{
     color:red;
 }
@@ -41,6 +44,12 @@
 }
 .likes img{
     width: 20px;
+    cursor: pointer;
+}
+.likes span{
+    
+    color: gray;
+    font-size: 11px;
 }
 .pie img{
     margin-right:1rem;

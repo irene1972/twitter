@@ -41,11 +41,15 @@ const contarLikesPorImagen = async (req, res) => {
 }
 
 const crearLike = async (req, res) => {
+    
     const { image_id, user_id } = req.body;
+    console.log(image_id);
+    console.log(user_id);
+    
     if (!image_id || !user_id) {
         return res.status(400).json({ error: 'Los campos son obligatorios' });
     }
-    try {
+    //try {
         const like = new Like(user_id, image_id);
         const resultado = await like.insert();
         if (resultado) {
@@ -57,9 +61,10 @@ const crearLike = async (req, res) => {
         } else {
             return res.status(500).json({ error: 'Ha habido un error al insertar los datos en la bd' });
         }
-    } catch (error) {
-        return res.status(500).json({ error: 'Ha habido un error al insertar los datos' });
-    }
+    //} catch (error) {
+        //return res.status(500).json({ error: 'Ha habido un error al insertar los datos' });
+    //}
+        
 }
 
 const eliminarLike = async (req, res) => {

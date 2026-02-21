@@ -31,9 +31,9 @@
                         <div class="pie">
                             <div class="likes">
                                 @if(haceMatchLaImagen(elem.id)){
-                                <img src="hearts-red.png" alt="heart red" class="btn-red">
+                                <img src="hearts-red.png" alt="heart red" [id]="haceMatchLaImagen(elem.id)" class="btn-red" (click)="dislike($event)">
                                 }@else{
-                                <img src="hearts-gray.png" alt="heart gray" class="btn-gray">
+                                <img src="hearts-gray.png" alt="heart gray" [id]="haceMatchLaImagen(elem.id)" class="btn-gray" (click)="like($event,elem.id)">
                                 }
                                 <span class="count">{{obtenerCount(elem.id)}}</span>
                             </div>

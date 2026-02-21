@@ -35,14 +35,14 @@ export class Like {
     }
 
     async insert() {
-        try {
-            const result = await pool.query('INSERT INTO likes (user_id,image_id,created_at,updated_at) VALUES (?,?,?,?,?)', [
+        //try {
+            const result = await pool.query('INSERT INTO likes (user_id,image_id,created_at,updated_at) VALUES (?,?,?,?)', [
                 this.user_id, this.image_id, this.created_at, this.updated_at
             ]);
             return result;
-        } catch (error) {
-            return false;
-        }
+        //} catch (error) {
+            //return false;
+        //}
     }
 
     async delete(id) {

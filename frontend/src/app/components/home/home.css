@@ -42,6 +42,7 @@ a{
 }
 .likes img{
     width: 20px;
+    cursor: pointer;
 }
 .pie{
     display: flex;
