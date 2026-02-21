@@ -1,3 +1,7 @@
+a{
+    text-decoration: none;
+    color:black;
+}
 .text-danger{
     color:red;
 }
@@ -33,6 +37,9 @@
 .card{
     margin:1rem 0;
 }
+.likes{
+    display: flex;
+}
 .likes img{
     width: 20px;
 }
@@ -43,7 +50,10 @@
 .pie img{
     margin-right:1rem;
 }
-a{
-    text-decoration: none;
-    color:black;
+.comentarios{
+    margin-left: 1rem;
+}
+.count{
+    color: gray;
+    font-size: 11px;
 }

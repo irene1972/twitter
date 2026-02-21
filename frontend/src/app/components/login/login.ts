@@ -40,7 +40,7 @@ export class Login {
       this.miForm.markAllAsTouched();
       return;
     }
-    //console.log(this.miForm.value);
+    console.log(this.miForm.value);
     fetch(`${environment.apiUrl}/usuarios/login`,{
           method:'POST',
           headers:{

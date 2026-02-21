@@ -28,7 +28,12 @@
                         </div>
                         <div class="pie">
                             <div class="likes">
-                                <img src="hearts-gray.png" alt="heart gray">
+                                @if(haceMatchLaImagen(datos.id)){
+                                <img src="hearts-red.png" alt="heart red" class="btn-red">
+                                }@else{
+                                <img src="hearts-gray.png" alt="heart gray" class="btn-gray">
+                                }
+                                <span class="count">{{obtenerCount(datos.id)}}</span>
                             </div>
                             <div class="comentarios">
                                 <h2>Comentarios({{encontrarCantidad(datos.id)}})</h2>

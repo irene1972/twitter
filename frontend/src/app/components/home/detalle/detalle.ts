@@ -22,6 +22,8 @@ export class Detalle {
   comentarios: any[] = [];
   numComentarios: any[] = [];
   datos: any = {};
+  count:any[]=[];
+  likes:any[]=[];
 
   miForm: FormGroup;
 
@@ -75,6 +77,25 @@ export class Detalle {
           this.cd.detectChanges();
         });
 
+      fetch(`${environment.apiUrl}/likes/contar-likes`)
+        .then(response => response.json())
+        .then(data => {
+          this.count = data;
+        })
+        .catch(error => console.log(error))
+        .finally(() => {
+          this.cd.detectChanges();
+        });
+
+      fetch(`${environment.apiUrl}/likes/obtener/${this.usuarioLogueado.id}`)
+      .then(response => response.json())
+      .then(data => {
+        this.likes = data;
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        this.cd.detectChanges();
+      });
     });
 
   }
@@ -188,5 +209,23 @@ export class Detalle {
       .finally(() => {
         this.cd.detectChanges();
       });
+  }
+
+  obtenerCount(id: number):number {
+    const encontrado = this.count.find((elem: any) => elem.image_id === id);
+    if (encontrado) {
+      return encontrado.count;
+    } else {
+      return 0;
+    }
+  }
+
+  haceMatchLaImagen(id:number):boolean{
+    const encontrado=this.likes.find((elem:any)=>elem.image_id===id);
+    if(encontrado){
+      return true;
+    }else{
+      return false;
+    }
   }
 }

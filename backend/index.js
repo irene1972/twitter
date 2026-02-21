@@ -4,6 +4,7 @@ import cors from 'cors';
 import usuarioRoutes from './routes/usuarioRoutes.js';
 import imagenRoutes from './routes/imagenRoutes.js';
 import comentarioRoutes from './routes/comentarioRoutes.js';
+import likeRoutes from './routes/likeRoutes.js';
 /*
 const corsOptions ={
    origin:'*', 
@@ -33,6 +34,7 @@ dotenv.config();
 app.use('/api/usuarios',usuarioRoutes);
 app.use('/api/imagenes',imagenRoutes);
 app.use('/api/comentarios',comentarioRoutes);
+app.use('/api/likes',likeRoutes);
 app.use('/imgs', express.static('public/imgs'));
 app.use('/imagenes', express.static('public/imagenes'));
 

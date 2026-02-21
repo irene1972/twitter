@@ -36,6 +36,9 @@
 .card{
     margin:1rem 0;
 }
+.likes{
+    display: flex;
+}
 .likes img{
     width: 20px;
 }
