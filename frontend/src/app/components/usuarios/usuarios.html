@@ -4,6 +4,17 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <h1>Gente</h1>
+                <div [class.text-danger]="tipo===false" [class.text-success]="tipo===true">{{mensaje}}</div>
+                <form [formGroup]="miForm" (ngSubmit)="buscar()">
+                    <div class="row">
+                        <div class="form-group col">
+                        <input type="text" id="buscar" formControlName="buscar" class="form-control">
+                    </div>
+                    <div class="form-group col btn-buscar">
+                        <input type="submit" value="Buscar" class="btn btn-success">
+                    </div>
+                    </div>
+                </form>
                 @if(datos.length===0){
                 <p>No hay datos que mostrar</p>
                 }@else{

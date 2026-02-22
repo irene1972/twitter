@@ -3,14 +3,16 @@ import { isAdmin, isLogged } from '../../shared/utils/funciones';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { DatePipe } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-usuarios',
-  imports: [RouterLink, DatePipe],
+  imports: [ReactiveFormsModule,RouterLink, DatePipe],
   templateUrl: './usuarios.html',
   styleUrl: './usuarios.css',
 })
 export class Usuarios {
+  miForm: FormGroup;
   mensaje: string = '';
   tipo: boolean = false;
   urlImgs: string = environment.imagesUrl;
@@ -25,7 +27,11 @@ export class Usuarios {
   itemsPorPagina: number = 5;
   totalPaginas: number = 0;
 
-  constructor(private cd: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) { }
+  constructor(private cd: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) { 
+    this.miForm=new FormGroup({
+      buscar:new FormControl('',[])
+    },[]);
+  }
 
   async ngOnInit() {
     const usuarioString = localStorage.getItem('usuarioTwitter');
@@ -99,5 +105,29 @@ export class Usuarios {
       this.paginaActual++;
       this.actualizarPaginacion();
     }
+  }
+  buscar(){
+    if(!this.miForm.valid){
+      this.miForm.markAllAsTouched();
+      return;
+    }
+    console.log(this.miForm.value);
+
+    fetch(`${environment.apiUrl}/usuarios/listar/${this.miForm.value.buscar}`)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            if (data.error) {
+              this.mensaje = data.error;
+              return;
+            }
+            this.mensaje = data.mensaje;
+            this.tipo = true;
+            this.datos = data;
+          })
+          .catch(error => console.log(error))
+          .finally(() => {
+            this.cd.detectChanges();
+          });
   }
 }
