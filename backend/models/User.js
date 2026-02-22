@@ -27,6 +27,19 @@ export class User {
 
     }
 
+    async getAllByNick(busqueda) {
+        try {
+            const result = await pool.query(`
+                SELECT * 
+                    FROM users 
+                    WHERE nick LIKE ? OR name LIKE ? OR surname LIKE ?
+                `,['%'+busqueda+'%','%'+busqueda+'%','%'+busqueda+'%']);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
+
     async getByEmail(email) {
         try {
             const result = await pool.query('SELECT * FROM users WHERE email=?', [email]);
@@ -56,15 +69,15 @@ export class User {
     }
 
     async updateConfirmado(email) {
-        
+
         try {
-            const result = await pool.query('UPDATE users SET confirmado=1,remember_token=null, updated_at=? WHERE email=?',[this.updated_at,email]);
+            const result = await pool.query('UPDATE users SET confirmado=1,remember_token=null, updated_at=? WHERE email=?', [this.updated_at, email]);
             //console.log(result);
             return result;
         } catch (error) {
             return false;
         }
-        
+
         //debug sql
         /*
         const sql = `UPDATE users SET confirmado=1,remember_token=null, updated_at=? WHERE email=?`;
@@ -78,25 +91,25 @@ export class User {
         */
     }
 
-    async updateByEmail(nick,name,surname,new_email,old_email){
+    async updateByEmail(nick, name, surname, new_email, old_email) {
         try {
-        
-            const result = await pool.query('UPDATE users SET nick=?,name=?, surname=?, email=?, updated_at=? WHERE email=?',[nick,name,surname,new_email,this.updated_at,old_email]);
+
+            const result = await pool.query('UPDATE users SET nick=?,name=?, surname=?, email=?, updated_at=? WHERE email=?', [nick, name, surname, new_email, this.updated_at, old_email]);
             //console.log(result);
             return result;
-            
+
         } catch (error) {
             return false;
         }
     }
 
-    async updateByEmailConImagen(nick,name,surname,new_email,imagen,old_email){
+    async updateByEmailConImagen(nick, name, surname, new_email, imagen, old_email) {
         try {
-        
-            const result = await pool.query('UPDATE users SET nick=?,name=?, surname=?, email=?,image=?, updated_at=? WHERE email=?',[nick,name,surname,new_email,imagen,this.updated_at,old_email]);
+
+            const result = await pool.query('UPDATE users SET nick=?,name=?, surname=?, email=?,image=?, updated_at=? WHERE email=?', [nick, name, surname, new_email, imagen, this.updated_at, old_email]);
             //console.log(result);
             return result;
-            
+
         } catch (error) {
             return false;
         }

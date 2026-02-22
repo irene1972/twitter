@@ -2,6 +2,7 @@ import express from 'express';
 import {
     envioEmail,
     getUsers,
+    getUsersByNick,
     getUser,
     getUserById,
     loginUsuario,
@@ -16,6 +17,7 @@ const router=express.Router();
 
 router.get('/',envioEmail);
 router.get('/listar',getUsers);
+router.get('/listar/:busqueda',getUsersByNick);
 router.get('/obtener/:email',getUser);
 router.get('/obtener-por-id/:id',getUserById);
 router.put('/confirmar',confirmarUsuario);

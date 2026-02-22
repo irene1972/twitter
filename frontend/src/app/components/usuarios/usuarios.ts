@@ -1,12 +1,12 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { isAdmin, isLogged } from '../../shared/utils/funciones';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-usuarios',
-  imports: [RouterLink,DatePipe],
+  imports: [RouterLink, DatePipe],
   templateUrl: './usuarios.html',
   styleUrl: './usuarios.css',
 })
@@ -16,7 +16,7 @@ export class Usuarios {
   urlImgs: string = environment.imagesUrl;
   usuarioLogueado: any = {};
   datos: any[] = [];
-  isAdmin:boolean=false;
+  isAdmin: boolean = false;
 
   //añadir paginación
   datosPaginados: any[] = [];
@@ -25,7 +25,7 @@ export class Usuarios {
   itemsPorPagina: number = 5;
   totalPaginas: number = 0;
 
-  constructor(private cd: ChangeDetectorRef,private router: Router) { }
+  constructor(private cd: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) { }
 
   async ngOnInit() {
     const usuarioString = localStorage.getItem('usuarioTwitter');
@@ -34,25 +34,51 @@ export class Usuarios {
       this.router.navigate(['/login']);
       return;
     }
-    this.isAdmin=true;
+    this.isAdmin = true;
     this.usuarioLogueado = JSON.parse(usuarioString);
 
-    await fetch(`${environment.apiUrl}/usuarios/listar`)
+    //recuperar parámetro de la url
+    this.route.paramMap.subscribe(params => {
+      const busqueda = params.get('busqueda');
+
+      if (busqueda) {
+        fetch(`${environment.apiUrl}/usuarios/listar/${busqueda}`)
           .then(response => response.json())
           .then(data => {
             console.log(data);
-            if(data.error){
-              this.mensaje=data.error;
+            if (data.error) {
+              this.mensaje = data.error;
               return;
             }
-            this.mensaje=data.mensaje;
-            this.tipo=true;
-            this.datos=data;
+            this.mensaje = data.mensaje;
+            this.tipo = true;
+            this.datos = data;
           })
           .catch(error => console.log(error))
           .finally(() => {
             this.cd.detectChanges();
           });
+      } else {
+        fetch(`${environment.apiUrl}/usuarios/listar`)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            if (data.error) {
+              this.mensaje = data.error;
+              return;
+            }
+            this.mensaje = data.mensaje;
+            this.tipo = true;
+            this.datos = data;
+          })
+          .catch(error => console.log(error))
+          .finally(() => {
+            this.cd.detectChanges();
+          });
+      }
+
+    });
+
   }
 
   actualizarPaginacion() {

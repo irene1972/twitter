@@ -12,6 +12,17 @@ const getUsers = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ error: 'Ha habido un error al consultar la base de datos' });
     }
+}
+const getUsersByNick = async (req, res) => {
+    const busqueda = req.params.busqueda;
+
+    try {
+        const usuario = new User();
+        const resultado = await usuario.getAllByNick(busqueda);
+        res.json(resultado[0]);
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido un error al consultar la base de datos' });
+    }
 
 }
 
@@ -96,7 +107,7 @@ const loginUsuario = async (req, res) => {
                         rol: usuarioEncontrado.role,
                         nombre: usuarioEncontrado.name,
                         imagen: usuarioEncontrado.image,
-                        id:usuarioEncontrado.id
+                        id: usuarioEncontrado.id
                     });
                 } else {
                     return res.status(400).json({ error: 'El usuario o password no coinciden' });
@@ -258,6 +269,7 @@ const updateUsuarioConImagen = async (req, res) => {
 export {
     envioEmail,
     getUsers,
+    getUsersByNick,
     getUser,
     getUserById,
     loginUsuario,

@@ -14,18 +14,28 @@ import { Editar } from './components/home/editar/editar';
 import { Usuarios } from './components/usuarios/usuarios';
 
 export const routes: Routes = [
+    //GENERALES
     {path:'',pathMatch:'full',redirectTo:'home'},
     {path:'home',component:Home},
-    {path:'detalle/:id',component:Detalle},
-    {path:'editar/:id',component:Editar},
-    {path:'likes',component:Likes},
-    {path:'mi-perfil/:id',component:MiPerfil},
-    {path:'subir-imagen',component:SubirImagen},
-    {path:'configuracion',component:Configuracion},
-    {path:'usuarios',component:Usuarios},
+
+    //USUARIO
     {path:'login',component:Login},
     {path:'registro',component:Registro},
     {path:'registro-exitoso',component:RegistroExitoso},
+    {path:'usuarios',component:Usuarios},
+    {path:'usuarios/:busqueda',component:Usuarios},
+    {path:'configuracion',component:Configuracion},
     {path:'confirmar/:token',component:Confirmar},
+    {path:'mi-perfil/:id',component:MiPerfil},
+
+    //IMAGEN
+    {path:'detalle/:id',component:Detalle},
+    {path:'editar/:id',component:Editar},
+    {path:'subir-imagen',component:SubirImagen},
+
+    //LIKES
+    {path:'likes',component:Likes},    
+    
+    //OTROS
     {path:'**',component:C404}
 ];
