@@ -4,6 +4,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <h1>Mis imágenes favoritas</h1>
+                <hr>
                 @for(elem of datosPaginados;track elem.id){
                 <app-card [elem]="elem"></app-card>
                 }

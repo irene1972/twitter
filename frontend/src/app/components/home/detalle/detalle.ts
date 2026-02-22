@@ -64,7 +64,7 @@ export class Detalle {
             this.tipo = true;
           } else {
             this.datos = data[0];
-            console.log('datos: ', this.datos);
+            //console.log('datos: ', this.datos);
             //extraer num comentarios por imagen
             this.numComentariosPorImagen();
 
@@ -139,7 +139,7 @@ export class Detalle {
       .then(response => response.json())
       .then(data => {
         this.comentarios = data;
-        console.log('comentarios: ', data);
+        //console.log('comentarios: ', data);
       })
       .catch(error => console.log(error))
       .finally(() => {
@@ -246,7 +246,7 @@ export class Detalle {
       })
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
         if(data.error){
           this.mensaje=data.error;
           return;

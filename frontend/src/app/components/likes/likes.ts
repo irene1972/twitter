@@ -40,7 +40,7 @@ export class Likes {
     await fetch(`${environment.apiUrl}/likes/obtener/${this.usuarioLogueado.id}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
 
         if (data.length === 0) {
           this.mensaje = 'No hay datos';
@@ -63,7 +63,7 @@ export class Likes {
     const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
     const fin = inicio + this.itemsPorPagina;
     this.datosPaginados = this.datos.slice(inicio, fin);
-    console.log(this.datosPaginados);
+    //console.log(this.datosPaginados);
     
   }
 

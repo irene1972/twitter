@@ -22,7 +22,7 @@ export class Header {
     const usuarioString=localStorage.getItem('usuarioTwitter');
     if(isLogged() && usuarioString){
       this.usuario=JSON.parse(usuarioString);
-      console.log(this.usuario);
+      //console.log(this.usuario);
       this.img=this.usuario.imagen;
     }
     

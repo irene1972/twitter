@@ -43,7 +43,7 @@ export class Home {
 
     this.route.queryParams.subscribe(params => {
       const code = params['code'];
-      console.log(code);
+      //console.log(code);
       if (code == 1) {
         this.mensaje = 'La imagen se ha guardado correctamente';
         this.tipo = true;
@@ -54,14 +54,13 @@ export class Home {
     await fetch(`${environment.apiUrl}/imagenes/listar`)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
 
         if (data.length === 0) {
           this.mensaje = 'No hay datos';
           this.tipo = true;
         } else {
           this.datos = data;
-          console.log('irene7:',this.datos);
 
           //añadir paginación
           this.totalPaginas = Math.ceil(this.datos.length / this.itemsPorPagina);

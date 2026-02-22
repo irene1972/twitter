@@ -133,7 +133,7 @@ export class Configuracion {
 
     if (input.files && input.files.length > 0) {
       this.imagenFile = input.files[0];
-      console.log(this.imagenFile);
+      //console.log(this.imagenFile);
     }
   }
 
@@ -154,7 +154,7 @@ export class Configuracion {
         }
         this.mensaje = data.mensaje;
         this.tipo = true;
-        console.log(data);
+        //console.log(data);
 
         //guardar los datos en el local storage
         localStorage.setItem('usuarioTwitter', JSON.stringify({
