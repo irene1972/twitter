@@ -5,48 +5,7 @@
             <div class="col-md-8">
                 <h1>Mis imágenes favoritas</h1>
                 @for(elem of datosPaginados;track elem.id){
-                    <!--<app-card [elem]="dato"></app-card>-->
-                    <div class="card pub-image">
-                    <div class="card-header">
-                        <div class="container-avatar">
-                            <img class="img-avatar" [src]="urlImgs+elem.image" alt="imagen avatar">
-                        </div>
-                        <div class="data-user">
-                            <a [routerLink]="['/detalle/',elem.id]" routerLinkActive="activo">
-                                {{elem.name}} {{elem.surname}}
-                                <span class="nickname">
-                                    | @ {{elem.nick}}
-                                </span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="image-container">
-                            <img [src]="urlImagenes+elem.image_path" alt="imagen">
-                        </div>
-
-                        <div class="descripcion">
-                            <span class="nick">@{{elem.nick}}</span> | <span>{{elem.created_at | date: 'dd/MM/yyyy'
-                                }}</span>
-                            <p>{{elem.description}}</p>
-                        </div>
-                        <div class="pie">
-                            <div class="likes">
-                                @if(haceMatchLaImagen(elem.id)){
-                                <img src="hearts-red.png" alt="heart red" [id]="haceMatchLaImagen(elem.id)" class="btn-red" (click)="dislike($event)">
-                                }@else{
-                                <img src="hearts-gray.png" alt="heart gray" [id]="haceMatchLaImagen(elem.id)" class="btn-gray" (click)="like($event,elem.id)">
-                                }
-                                <span class="count">{{obtenerCount(elem.id)}}</span>
-                            </div>
-                            <div class="comentarios">
-                                <a href="" class="btn btn-sm btn-warning btn-comentarios">
-                                    Comentarios({{encontrarCantidad(elem.id)}})
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <app-card [elem]="elem"></app-card>
                 }
             </div>
         </div>

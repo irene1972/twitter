@@ -13,7 +13,7 @@ export class Image{
     async getAll(){
         try {
             const result=await pool.query(`
-                SELECT i.*,u.name,u.surname,u.nick,u.image  
+                SELECT i.*,u.name,u.surname,u.nick,u.image,i.id as image_id    
                     FROM images i 
                     INNER JOIN users u ON u.id=i.user_id 
                     ORDER BY i.id DESC

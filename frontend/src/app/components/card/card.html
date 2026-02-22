@@ -4,7 +4,7 @@
             <img class="img-avatar" [src]="urlImgs+elem.image" alt="imagen avatar">
         </div>
         <div class="data-user">
-            <a [routerLink]="['/detalle/',elem.id]" routerLinkActive="activo">
+            <a [routerLink]="['/detalle/',elem.image_id]" routerLinkActive="activo">
                 {{elem.name}} {{elem.surname}}
                 <span class="nickname">
                     | @ {{elem.nick}}
@@ -24,18 +24,18 @@
         </div>
         <div class="pie">
             <div class="likes">
-                @if(haceMatchLaImagen(elem.id)){
-                <img src="hearts-red.png" alt="heart red" [id]="haceMatchLaImagen(elem.id)" class="btn-red"
+                @if(haceMatchLaImagen(elem.image_id)){
+                <img src="hearts-red.png" alt="heart red" [id]="haceMatchLaImagen(elem.image_id)" class="btn-red"
                     (click)="dislike($event)">
                 }@else{
-                <img src="hearts-gray.png" alt="heart gray" [id]="haceMatchLaImagen(elem.id)" class="btn-gray"
-                    (click)="like($event,elem.id)">
+                <img src="hearts-gray.png" alt="heart gray" [id]="haceMatchLaImagen(elem.image_id)" class="btn-gray"
+                    (click)="like($event,elem.image_id)">
                 }
-                <span class="count">{{obtenerCount(elem.id)}}</span>
+                <span class="count">{{obtenerCount(elem.image_id)}}</span>
             </div>
             <div class="comentarios">
                 <a href="" class="btn btn-sm btn-warning btn-comentarios">
-                    Comentarios({{encontrarCantidad(elem.id)}})
+                    Comentarios({{encontrarCantidad(elem.image_id)}})
                 </a>
             </div>
         </div>

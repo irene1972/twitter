@@ -11,7 +11,14 @@ export class Like {
 
     async getByUser(){
         try {
-            const result=await pool.query('SELECT * FROM likes WHERE user_id=? ORDER BY id DESC',[
+            const result=await pool.query(`
+                SELECT l.*, i.image_path,i.description,u.name,u.surname,u.nick,u.image,u.email 
+                    FROM likes l 
+                    INNER JOIN images i ON i.id=l.image_id 
+                    INNER JOIN users u ON u.id=l.user_id 
+                    WHERE l.user_id=? 
+                    ORDER BY id DESC
+                `,[
                 this.user_id
             ]);
             return result;

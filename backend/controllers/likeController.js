@@ -8,7 +8,7 @@ const obtenerLikesPorUsuario = async (req, res) => {
         return res.status(400).json({ error: 'El campo es obligatorio' });
     }
 
-    try {
+    //try {
         const like = new Like(user_id);
         const resultado = await like.getByUser();
         if (resultado) {
@@ -17,9 +17,9 @@ const obtenerLikesPorUsuario = async (req, res) => {
             return res.status(500).json({ error: 'Ha habido un error al consultar la base de datos' });
         }
 
-    } catch (error) {
-        return res.status(500).json({ error: 'Ha habido un error al consultar los datos' });
-    }
+    //} catch (error) {
+       // return res.status(500).json({ error: 'Ha habido un error al consultar los datos' });
+    //}
 
 }
 

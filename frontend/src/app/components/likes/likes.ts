@@ -1,12 +1,12 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { isLogged } from '../../shared/utils/funciones';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { DatePipe } from '@angular/common';
+import { Card } from '../card/card';
 
 @Component({
   selector: 'app-likes',
-  imports: [DatePipe,RouterLink],
+  imports: [Card],
   templateUrl: './likes.html',
   styleUrl: './likes.css',
 })
@@ -17,9 +17,6 @@ export class Likes {
   urlImagenes: string = environment.imagesUrl2;
   datos: any[] = [];
   usuarioLogueado: any = {};
-  numComentarios: any[] = [];
-  count:any[]=[];
-  likes:any[]=[];
 
   //añadir paginación
   datosPaginados: any[] = [];
@@ -66,6 +63,7 @@ export class Likes {
     const inicio = (this.paginaActual - 1) * this.itemsPorPagina;
     const fin = inicio + this.itemsPorPagina;
     this.datosPaginados = this.datos.slice(inicio, fin);
+    console.log(this.datosPaginados);
     
   }
 
@@ -83,105 +81,4 @@ export class Likes {
     }
   }
 
-  haceMatchLaImagen(id: number): number {
-    const encontrado = this.likes.find((elem: any) => elem.image_id === id);
-    if (encontrado) {
-      return encontrado.id;
-    } else {
-      return 0;
-    }
-  }
-
-  like(event: Event, image_id: number) {
-    const imagen = event.target as HTMLImageElement;
-    const like_id = parseInt(imagen.id);
-    if (like_id === 0) {
-      const datos: any = {};
-      datos.image_id = image_id;
-      datos.user_id = this.usuarioLogueado.id;
-      //crear el like en la base de datos
-      fetch(`${environment.apiUrl}/likes/crear`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8'
-        },
-        body: JSON.stringify(datos)
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          if (data.error) {
-            this.mensaje = data.error;
-            return;
-          }
-          this.mensaje = data.mensaje;
-          this.tipo = true;
-
-          location.reload();
-
-        })
-        .catch(error => console.log(error))
-        .finally(() => {
-          this.cd.detectChanges();
-        });
-    }
-
-  }
-
-  dislike(event: Event) {
-    const imagen = event.target as HTMLImageElement;
-    const like_id = parseInt(imagen.id);
-    if (like_id > 0) {
-      //eliminar el like de la base de datos
-      fetch(`${environment.apiUrl}/likes/eliminar/${like_id}`, {
-        method: 'DELETE'
-      })
-        .then(response => response.json())
-        .then(data => {
-          if (data.error) {
-            this.mensaje = data.error;
-            return;
-          }
-          this.mensaje = data.mensaje;
-          this.tipo = true;
-
-          location.reload();
-        })
-        .catch(error => console.log(error))
-        .finally(() => {
-          this.cd.detectChanges();
-        });
-    }
-  }
-
-  obtenerCount(id: number): number {
-    const encontrado = this.count.find((elem: any) => elem.image_id === id);
-    if (encontrado) {
-      return encontrado.count;
-    } else {
-      return 0;
-    }
-  }
-
-  encontrarCantidad(id: number): number {
-    const encontrado = this.numComentarios.find((e: any) => e.image_id === id);
-    if (encontrado) {
-      return encontrado.cantidad;
-    } else {
-      return 0;
-    }
-
-  }
-
-  numComentariosPorImagen() {
-    fetch(`${environment.apiUrl}/comentarios/num-comentarios`)
-      .then(response => response.json())
-      .then(data => {
-        this.numComentarios = data;
-      })
-      .catch(error => console.log(error))
-      .finally(() => {
-        this.cd.detectChanges();
-      });
-  }
 }
