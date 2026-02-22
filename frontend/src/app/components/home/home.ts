@@ -14,8 +14,6 @@ export class Home {
 
   mensaje: string = '';
   tipo: boolean = false;
-  urlImgs: string = environment.imagesUrl;
-  urlImagenes: string = environment.imagesUrl2;
   usuarioLogueado:any={};
   numComentarios: any[] = [];
   datos: any[] = [];

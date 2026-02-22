@@ -4,7 +4,7 @@
             <img class="img-avatar" [src]="urlImgs+elem.image" alt="imagen avatar">
         </div>
         <div class="data-user">
-            <a [routerLink]="['/detalle/',elem.image_id]" routerLinkActive="activo">
+            <a [routerLink]="['/mi-perfil']">
                 {{elem.name}} {{elem.surname}}
                 <span class="nickname">
                     | @ {{elem.nick}}
@@ -13,9 +13,11 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="image-container">
-            <img [src]="urlImagenes+elem.image_path" alt="imagen">
-        </div>
+        <a [routerLink]="['/detalle/',elem.image_id]">
+            <div class="image-container">
+                <img [src]="urlImagenes+elem.image_path" alt="imagen">
+            </div>
+        </a>
 
         <div class="descripcion">
             <span class="nick">@{{elem.nick}}</span> | <span>{{elem.created_at | date: 'dd/MM/yyyy'
@@ -34,7 +36,7 @@
                 <span class="count">{{obtenerCount(elem.image_id)}}</span>
             </div>
             <div class="comentarios">
-                <a href="" class="btn btn-sm btn-warning btn-comentarios">
+                <a [routerLink]="['/detalle/',elem.image_id]" class="btn btn-sm btn-warning btn-comentarios">
                     Comentarios({{encontrarCantidad(elem.image_id)}})
                 </a>
             </div>

@@ -24,6 +24,21 @@ export class Image{
         }
     }
 
+    async getAllByUser(user_id){
+        try {
+            const result=await pool.query(`
+                SELECT i.*,u.name,u.surname,u.nick,u.image,i.id as image_id    
+                    FROM images i 
+                    INNER JOIN users u ON u.id=i.user_id 
+                    WHERE i.user_id=?
+                    ORDER BY i.id DESC
+                `,[user_id]);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
+
     async getById(id){
         try {
             const result=await pool.query(`

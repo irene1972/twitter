@@ -4,6 +4,7 @@
         <ul class="lista-flex">
             @if(usuario.email){
             <li><a [routerLink]="['/home']" routerLinkActive="activo">Inicio</a></li>
+            <li><a [routerLink]="['/likes']" routerLinkActive="activo">Favoritas</a></li>
             <li><a [routerLink]="['/subir-imagen']" routerLinkActive="activo">Subir imagen</a></li>
             @if(img){
                 <li><img [src]="urlImgs+img" alt="imagen usuario"></li>
@@ -16,7 +17,7 @@
                     </button>
 
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" [routerLink]="['/home']" routerLinkActive="activo">Mi perfil</a>
+                        <li><a class="dropdown-item" [routerLink]="['/mi-perfil']" routerLinkActive="activo">Mi perfil</a>
                         </li>
                         <li><a class="dropdown-item" [routerLink]="['/configuracion']"
                                 routerLinkActive="activo">Configuración</a></li>

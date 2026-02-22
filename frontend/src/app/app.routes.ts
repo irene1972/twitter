@@ -9,12 +9,14 @@ import { Configuracion } from './components/configuracion/configuracion';
 import { SubirImagen } from './components/subir-imagen/subir-imagen';
 import { Detalle } from './components/home/detalle/detalle';
 import { Likes } from './components/likes/likes';
+import { MiPerfil } from './components/mi-perfil/mi-perfil';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
     {path:'home',component:Home},
     {path:'detalle/:id',component:Detalle},
     {path:'likes',component:Likes},
+    {path:'mi-perfil',component:MiPerfil},
     {path:'subir-imagen',component:SubirImagen},
     {path:'configuracion',component:Configuracion},
     {path:'login',component:Login},

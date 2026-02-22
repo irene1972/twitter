@@ -38,7 +38,7 @@ export class Card {
     await fetch(`${environment.apiUrl}/imagenes/listar`)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
 
         if (data.length === 0) {
           this.mensaje = 'No hay datos';
