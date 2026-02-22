@@ -36,6 +36,15 @@ export class User {
         }
     }
 
+    async getById(id) {
+        try {
+            const result = await pool.query('SELECT * FROM users WHERE id=?', [id]);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
+
     async getByToken(token) {
 
         try {

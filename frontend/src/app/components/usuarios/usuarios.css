@@ -1,0 +1,19 @@
+.flex{
+    display: flex;
+}
+.profile-user{
+    margin-bottom: 40px;
+}
+.profile-user .user-info{
+    padding-left: 30px;
+    padding-top: 30px;
+}
+.container-avatar{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.container-avatar img{
+    height: 100%;
+}

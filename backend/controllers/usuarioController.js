@@ -35,6 +35,26 @@ const getUser = async (req, res) => {
     }
 }
 
+const getUserById = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const usuario = new User();
+        const resultado = await usuario.getById(id);
+        if (resultado) {
+            if (resultado[0].length === 0) {
+                return res.status(400).json({ error: 'El usuario no existe' });
+            } else {
+                res.json(resultado[0][0]);
+            }
+        }
+        else {
+            return res.status(500).json({ error: 'Ha habido algún error al consultar la bd' });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido algún error al consultar los datos' });
+    }
+}
+
 const envioEmail = async (req, res) => {
 
     try {
@@ -239,6 +259,7 @@ export {
     envioEmail,
     getUsers,
     getUser,
+    getUserById,
     loginUsuario,
     crearUsuario,
     confirmarUsuario,

@@ -11,6 +11,7 @@ import { Detalle } from './components/home/detalle/detalle';
 import { Likes } from './components/likes/likes';
 import { MiPerfil } from './components/mi-perfil/mi-perfil';
 import { Editar } from './components/home/editar/editar';
+import { Usuarios } from './components/usuarios/usuarios';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
@@ -18,9 +19,10 @@ export const routes: Routes = [
     {path:'detalle/:id',component:Detalle},
     {path:'editar/:id',component:Editar},
     {path:'likes',component:Likes},
-    {path:'mi-perfil',component:MiPerfil},
+    {path:'mi-perfil/:id',component:MiPerfil},
     {path:'subir-imagen',component:SubirImagen},
     {path:'configuracion',component:Configuracion},
+    {path:'usuarios',component:Usuarios},
     {path:'login',component:Login},
     {path:'registro',component:Registro},
     {path:'registro-exitoso',component:RegistroExitoso},

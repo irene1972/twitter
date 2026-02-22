@@ -25,7 +25,7 @@ export class Card {
   constructor(private cd: ChangeDetectorRef, private router: Router) { }
 
   async ngOnInit() {
-    
+    console.log('irene4:',this.elem);
     const usuarioString = localStorage.getItem('usuarioTwitter');
 
     if (!isLogged() || !usuarioString) {

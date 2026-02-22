@@ -3,6 +3,11 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <h1>Lista de usuarios</h1>
+                @if(datos.length===0){
+                <p>No hay datos que mostrar</p>
+                }@else{
+                @for(usuario of datos;track usuario.id){
                 <div class="profile-user flex">
                     @if(usuario.image){
                     <div class="container-avatar">
@@ -14,18 +19,14 @@
                     </div>
                     }
                     <div class="user-info">
-                        <h1>@{{usuario.nick}}</h1>
-                        <h2>{{usuario.name}} {{usuario.surname}} </h2>
+                        <h2>@{{usuario.nick}}</h2>
+                        <h3>{{usuario.name}} {{usuario.surname}} </h3>
                         <p>Se unió: {{usuario.created_at | date: 'dd/MM/yyyy'}}</p>
+                        <a [routerLink]="['/mi-perfil/',usuario.id]" class="btn btn-success">Ver perfil</a>
                     </div>
                 </div>
-                <hr>
-                <div>
-                    @for(elem of datosPaginados; track elem.id){
-                    <app-card [elem]="elem"></app-card>
-                    }
-                </div>
-
+                }
+                }
             </div>
         </div>
         <!-- Añadir paginación -->

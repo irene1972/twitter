@@ -4,7 +4,7 @@
             <img class="img-avatar" [src]="urlImgs+elem.image" alt="imagen avatar">
         </div>
         <div class="data-user">
-            <a [routerLink]="['/mi-perfil']">
+            <a [routerLink]="['/mi-perfil',elem.user_id]">
                 {{elem.name}} {{elem.surname}}
                 <span class="nickname">
                     | @ {{elem.nick}}

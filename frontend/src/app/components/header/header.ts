@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { isLogged } from '../../shared/utils/funciones';
+import { isAdmin, isLogged } from '../../shared/utils/funciones';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment';
 
@@ -14,6 +14,7 @@ export class Header {
   usuario:any={};
   urlImgs: string = environment.imagesUrl;
   img:string='';
+  isAdmin:boolean=false;
 
   constructor(private router: Router){}
 
@@ -24,6 +25,10 @@ export class Header {
       this.usuario=JSON.parse(usuarioString);
       //console.log(this.usuario);
       this.img=this.usuario.imagen;
+    }
+
+    if(isAdmin()){
+      this.isAdmin=true;
     }
     
   }

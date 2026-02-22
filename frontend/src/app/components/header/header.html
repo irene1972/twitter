@@ -3,37 +3,40 @@
     <nav>
         <ul class="lista-flex">
             @if(usuario.email){
-            <li><a [routerLink]="['/home']" routerLinkActive="activo">Inicio</a></li>
-            <li><a [routerLink]="['/likes']" routerLinkActive="activo">Favoritas</a></li>
-            <li><a [routerLink]="['/subir-imagen']" routerLinkActive="activo">Subir imagen</a></li>
-            @if(img){
-                <li><img [src]="urlImgs+img" alt="imagen usuario"></li>
-            }
-            <li>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        {{usuario?.nombre}}
-                    </button>
+                <li><a [routerLink]="['/home']" routerLinkActive="activo">Inicio</a></li>
+                @if(isAdmin){
+                    <li><a [routerLink]="['/usuarios']" routerLinkActive="activo">Gente</a></li>
+                }
+                <li><a [routerLink]="['/likes']" routerLinkActive="activo">Favoritas</a></li>
+                <li><a [routerLink]="['/subir-imagen']" routerLinkActive="activo">Subir imagen</a></li>
+                @if(img){
+                    <li><img [src]="urlImgs+img" alt="imagen usuario"></li>
+                }
+                <li>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            {{usuario?.nombre}}
+                        </button>
 
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" [routerLink]="['/mi-perfil']">Mi perfil</a>
-                        </li>
-                        <li><a class="dropdown-item" [routerLink]="['/configuracion']"
-                                routerLinkActive="activo">Configuración</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" [routerLink]="['/login']">Login</a></li>
-                        <li><a class="dropdown-item" [routerLink]="['/registro']"
-                                routerLinkActive="activo">Registrarse</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" (click)="cerrarSesion()">Cerrar Sesión</a></li>
-                    </ul>
-                </div>
-            </li>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" [routerLink]="['/mi-perfil']">Mi perfil</a>
+                            </li>
+                            <li><a class="dropdown-item" [routerLink]="['/configuracion']"
+                                    routerLinkActive="activo">Configuración</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" [routerLink]="['/login']">Login</a></li>
+                            <li><a class="dropdown-item" [routerLink]="['/registro']"
+                                    routerLinkActive="activo">Registrarse</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" (click)="cerrarSesion()">Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
+                </li>
             }
             <!--
             <li><a [routerLink]="['/home']" routerLinkActive="activo">{{usuario?.nombre}}</a></li>
