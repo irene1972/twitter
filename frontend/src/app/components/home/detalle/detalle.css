@@ -41,8 +41,10 @@ h2{
 }
 .likes{
     display: flex;
+    align-items: center;
 }
 .likes img{
+    height: 20px;
     width: 20px;
     cursor: pointer;
 }
@@ -56,4 +58,7 @@ h2{
 }
 .pub-image{
     padding: 1rem;
+}
+.btn-primary{
+    margin:0 1rem;
 }

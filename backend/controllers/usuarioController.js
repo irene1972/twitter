@@ -36,7 +36,6 @@ const getUser = async (req, res) => {
 }
 
 const envioEmail = async (req, res) => {
-    //res.json('Funciona!');
 
     try {
         //envio del email

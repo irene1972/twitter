@@ -77,9 +77,28 @@ const crearImagen = async (req, res) => {
 
 }
 
+const eliminarImagen=async(req,res)=>{
+    const id=req.params.id;
+
+    try {
+        const imagen_ = new Image();
+        const respuestaComentarios = await imagen_.eliminarComentarios(id);
+        const respuestaLikes = await imagen_.eliminarLikes(id);
+        const respuestaImagenes = await imagen_.eliminarImagenes(id);
+        if(respuestaComentarios && respuestaLikes && respuestaImagenes){
+            res.json({mensaje:'Imagen eliminada correctamente'});
+        }else{
+           return res.status(500).json({ error: 'Ha habido un error al eliminar los datos de la bd' }); 
+        }
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido un error al eliminar los datos' });
+    }
+}
+
 export {
     getImagenes,
     getImagenesPorUsuario,
     getImagenById,
-    crearImagen
+    crearImagen,
+    eliminarImagen
 }

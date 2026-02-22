@@ -290,4 +290,29 @@ export class Detalle {
       });
     }
   }
+
+  actualizar(){
+
+  }
+
+  eliminar(id:number){
+    fetch(`${environment.apiUrl}/imagenes/eliminar/${id}`, {
+      method: 'DELETE'
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          this.mensaje = data.error;
+          return;
+        }
+        this.mensaje = data.mensaje;
+        this.tipo = true;
+
+        this.router.navigate(['/home']);
+      })
+      .catch(error => console.log(error))
+      .finally(() => {
+        this.cd.detectChanges();
+      });
+  }
 }

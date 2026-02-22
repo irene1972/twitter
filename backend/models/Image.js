@@ -63,4 +63,29 @@ export class Image{
             return false;
         }
     }
+
+    async eliminarComentarios(image_id){
+        try {
+            const result=await pool.query(`DELETE FROM comments WHERE image_id=?`,[image_id]);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
+    async eliminarLikes(image_id){
+        try {
+            const result=await pool.query(`DELETE FROM likes WHERE image_id=?`,[image_id]);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
+    async eliminarImagenes(id){
+        try {
+            const result=await pool.query(`DELETE FROM images WHERE id=?`,[id]);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
 }
