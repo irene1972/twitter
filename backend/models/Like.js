@@ -11,7 +11,7 @@ export class Like {
 
     async getByUser(){
         try {
-            const result=await pool.query('SELECT * FROM likes WHERE user_id=?',[
+            const result=await pool.query('SELECT * FROM likes WHERE user_id=? ORDER BY id DESC',[
                 this.user_id
             ]);
             return result;
