@@ -53,6 +53,11 @@ export class Home {
           this.tipo = true;
           this.cd.detectChanges();
           break;
+        case "3":
+          this.mensaje = 'La imagen se ha actualizado correctamente';
+          this.tipo = true;
+          this.cd.detectChanges();
+          break;
       }
       
     });

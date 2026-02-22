@@ -1,1 +1,49 @@
-<p>editar works!</p>
+<section>
+    <div class="card">
+        <div class="card-header">Editar imagen</div>
+        <div class="card-body">
+            <div [class.text-danger]="tipo===false" [class.text-success]="tipo===true">{{mensaje}}</div>
+            <form [formGroup]="miForm" (ngSubmit)="cargarDatos()">
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label text-md-right" for="imagen">Imagen</label>
+                    <div class="col-md-7">
+                        @if(usuarioLogueado.id===datos.user_id){
+                        <div class="container-avatar">
+                            <img class="img-avatar" [src]="urlImagenes+datos.image_path" alt="imagen avatar">
+                        </div>
+                        }
+                        <input 
+                            accept="image/png, image/jpeg, image/jpg, image/gif" 
+                            type="file" 
+                            id="imagen" 
+                            class="form-control file"  
+                            formControlName="imagen"  
+                            (change)="onFileSelected($event)">
+                        @if(imagen?.touched && imagen?.hasError('required')){
+                        <div class="text-danger">El campo es requerido</div>
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label text-md-right" for="descripcion">Descripcion</label>
+                    <div class="col-md-7">
+                        <textarea formControlName="descripcion" id="descripcion" class="form-control" ></textarea>
+                        @if(descripcion?.touched && descripcion?.hasError('required')){
+                        <div class="text-danger">El campo es requerido</div>
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-6 offset-md-3">
+                        <input type="submit" class="btn btn-primary submit" value="Actualizar imagen">
+                        
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</section>

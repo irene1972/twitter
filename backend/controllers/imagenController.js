@@ -109,10 +109,42 @@ const eliminarImagen = async (req, res) => {
     }
 }
 
+const editarImagen=async(req,res)=>{
+ 
+    if (!req.file) {
+        return res.status(500).json({ error: 'Solo se permiten imágenes JPG, JPEG, PNG o GIF' });
+    }
+
+    const { descripcion, usuario_id } = req.body;
+    const id=req.params.id;
+    const imagen = req.file.filename;
+
+    try {
+    
+        const imagen_ = new Image(usuario_id, imagen, descripcion);
+        const respuesta = await imagen_.update(id);
+        if (respuesta) {
+            console.log(respuesta);
+            if (respuesta[0].affectedRows === 1) {
+                res.json({ mensaje: 'Imagen actualizada correctamente' });
+            } else {
+                return res.status(500).json({ error: 'Ha habido un error al actualizar los datos en la bd' });
+            }
+
+        } else {
+            return res.status(500).json({ error: 'Ha habido un error al actualizar los datos en la bd' });
+        }
+            
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido un error al actualizar los datos' });
+    }
+}
+
 export {
     getImagenes,
     getImagenesPorUsuario,
     getImagenById,
     crearImagen,
+    editarImagen,
     eliminarImagen
 }

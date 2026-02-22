@@ -88,4 +88,17 @@ export class Image{
             return false;
         }
     }
+
+    async update(id) {
+        try {
+            const result=await pool.query(`
+                UPDATE images 
+                    SET image_path=?, description=?, updated_at=? 
+                    WHERE id=?;
+                `,[this.image_path, this.description, this.updated_at,id]);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
 }

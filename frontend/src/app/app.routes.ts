@@ -10,11 +10,13 @@ import { SubirImagen } from './components/subir-imagen/subir-imagen';
 import { Detalle } from './components/home/detalle/detalle';
 import { Likes } from './components/likes/likes';
 import { MiPerfil } from './components/mi-perfil/mi-perfil';
+import { Editar } from './components/home/editar/editar';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
     {path:'home',component:Home},
     {path:'detalle/:id',component:Detalle},
+    {path:'editar/:id',component:Editar},
     {path:'likes',component:Likes},
     {path:'mi-perfil',component:MiPerfil},
     {path:'subir-imagen',component:SubirImagen},

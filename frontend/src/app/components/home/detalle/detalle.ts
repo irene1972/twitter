@@ -1,13 +1,13 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { isLogged } from '../../../shared/utils/funciones';
 import { DatePipe } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-detalle',
-  imports: [ReactiveFormsModule, DatePipe],
+  imports: [ReactiveFormsModule, RouterLink, DatePipe],
   templateUrl: './detalle.html',
   styleUrl: './detalle.css',
 })

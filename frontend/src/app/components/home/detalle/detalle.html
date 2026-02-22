@@ -1,7 +1,22 @@
 <section>
     <div [class.text-danger]="tipo===false" [class.text-success]="tipo===true">{{mensaje}}</div>
     <div class="container">
-
+        
+        <!-- Modal -->
+        <div class="modal fade" id="targetModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLabel">¿Estás seguro de eliminar la imagen?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" (click)="eliminar(datos.id,datos.image_path)">Eliminar</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="card pub-image">
@@ -38,8 +53,8 @@
                                 <span class="count">{{obtenerCount(datos.id)}}</span>
                                 @if(usuarioLogueado.id===datos.user_id){
                                 <div class="acciones">
-                                    <a (click)="actualizar()" class="btn btn-sm btn-primary">Actualizar</a>
-                                    <a (click)="eliminar(datos.id,datos.image_path)" class="btn btn-sm btn-danger">Borrar</a>
+                                    <a [routerLink]="['/editar',datos.id]" class="btn btn-sm btn-primary">Actualizar</a>
+                                    <a class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#targetModal">Borrar</a>
                                 </div>
                                 }
                             </div>
