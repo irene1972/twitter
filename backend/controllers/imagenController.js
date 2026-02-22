@@ -53,7 +53,7 @@ const getImagenById = async (req, res) => {
 
 const crearImagen = async (req, res) => {
     if (!req.file) {
-        return res.status(500).json({ error: 'Solo se permiten imágenes JPG, JPEG, PNG o GIF' });
+        return res.status(500).json({ error: 'Solo se permiten imágenes JPG, JPEG, PNG, GIF o WEBP' });
     }
 
     const { descripcion, usuario_id } = req.body;
@@ -112,7 +112,7 @@ const eliminarImagen = async (req, res) => {
 const editarImagen=async(req,res)=>{
  
     if (!req.file) {
-        return res.status(500).json({ error: 'Solo se permiten imágenes JPG, JPEG, PNG o GIF' });
+        return res.status(500).json({ error: 'Solo se permiten imágenes JPG, JPEG, PNG, GIF o WEBP' });
     }
 
     const { descripcion, usuario_id } = req.body;

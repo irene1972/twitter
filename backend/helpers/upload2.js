@@ -19,14 +19,16 @@ const upload = multer({
     const allowedMimeTypes = [
       'image/jpeg',
       'image/png',
-      'image/gif'
+      'image/gif',
+      'image/webp'
     ];
 
     const allowedExtensions = [
       '.jpg',
       '.jpeg',
       '.png',
-      '.gif'
+      '.gif',
+      '.webp'
     ];
 
     const ext = path.extname(file.originalname).toLowerCase();
