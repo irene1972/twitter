@@ -295,8 +295,8 @@ export class Detalle {
 
   }
 
-  eliminar(id:number){
-    fetch(`${environment.apiUrl}/imagenes/eliminar/${id}`, {
+  eliminar(id:number,image_path:string){
+    fetch(`${environment.apiUrl}/imagenes/eliminar/${id}/${image_path}`, {
       method: 'DELETE'
     })
       .then(response => response.json())
@@ -308,7 +308,10 @@ export class Detalle {
         this.mensaje = data.mensaje;
         this.tipo = true;
 
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home'],{
+          queryParams:{code:2}
+        });
+
       })
       .catch(error => console.log(error))
       .finally(() => {

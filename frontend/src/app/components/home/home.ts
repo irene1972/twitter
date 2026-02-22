@@ -14,11 +14,11 @@ export class Home {
 
   mensaje: string = '';
   tipo: boolean = false;
-  usuarioLogueado:any={};
+  usuarioLogueado: any = {};
   numComentarios: any[] = [];
   datos: any[] = [];
-  count:any[]=[];
-  likes:any[]=[];
+  count: any[] = [];
+  likes: any[] = [];
 
   //añadir paginación
   datosPaginados: any[] = [];
@@ -37,16 +37,24 @@ export class Home {
       return;
     }
 
-    this.usuarioLogueado=JSON.parse(usuarioString);
+    this.usuarioLogueado = JSON.parse(usuarioString);
 
     this.route.queryParams.subscribe(params => {
       const code = params['code'];
       //console.log(code);
-      if (code == 1) {
-        this.mensaje = 'La imagen se ha guardado correctamente';
-        this.tipo = true;
-        this.cd.detectChanges();
+      switch (code) {
+        case "1":
+          this.mensaje = 'La imagen se ha guardado correctamente';
+          this.tipo = true;
+          this.cd.detectChanges();
+          break;
+        case "2":
+          this.mensaje = 'La imagen se ha eliminado correctamente';
+          this.tipo = true;
+          this.cd.detectChanges();
+          break;
       }
+      
     });
 
     await fetch(`${environment.apiUrl}/imagenes/listar`)
@@ -73,7 +81,7 @@ export class Home {
         this.cd.detectChanges();
       });
 
-      await fetch(`${environment.apiUrl}/likes/contar-likes`)
+    await fetch(`${environment.apiUrl}/likes/contar-likes`)
       .then(response => response.json())
       .then(data => {
         this.count = data;
@@ -83,7 +91,7 @@ export class Home {
         this.cd.detectChanges();
       });
 
-      await fetch(`${environment.apiUrl}/likes/obtener/${this.usuarioLogueado.id}`)
+    await fetch(`${environment.apiUrl}/likes/obtener/${this.usuarioLogueado.id}`)
       .then(response => response.json())
       .then(data => {
         this.likes = data;

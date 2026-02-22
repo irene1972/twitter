@@ -14,6 +14,6 @@ router.get('/listar', getImagenes);
 router.get('/listar-por-usuario/:user_id', getImagenesPorUsuario);
 router.get('/detalle/:id', getImagenById);
 router.post('/crear',upload2.single('imagen'),crearImagen);
-router.delete('/eliminar/:id',eliminarImagen);
+router.delete('/eliminar/:id/:image_path',eliminarImagen);
 
 export default router;

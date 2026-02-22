@@ -1,4 +1,5 @@
-import { Image } from "../models/Image.js"
+import { Image } from "../models/Image.js";
+import fs from 'fs';
 
 const getImagenes = async (req, res) => {
     try {
@@ -18,7 +19,7 @@ const getImagenes = async (req, res) => {
 
 const getImagenesPorUsuario = async (req, res) => {
 
-    const user_id=req.params.user_id;
+    const user_id = req.params.user_id;
 
     try {
         const imagen = new Image();
@@ -35,11 +36,11 @@ const getImagenesPorUsuario = async (req, res) => {
 
 }
 
-const getImagenById=async(req,res)=>{
-    const id=req.params.id;
+const getImagenById = async (req, res) => {
+    const id = req.params.id;
     try {
-        const imagen=new Image();
-        const resultado=await imagen.getById(id);
+        const imagen = new Image();
+        const resultado = await imagen.getById(id);
         if (resultado) {
             res.json(resultado[0]);
         } else {
@@ -77,18 +78,31 @@ const crearImagen = async (req, res) => {
 
 }
 
-const eliminarImagen=async(req,res)=>{
-    const id=req.params.id;
+const eliminarImagen = async (req, res) => {
+    const id = req.params.id;
+    const image_path=req.params.image_path;
 
     try {
+        
         const imagen_ = new Image();
         const respuestaComentarios = await imagen_.eliminarComentarios(id);
         const respuestaLikes = await imagen_.eliminarLikes(id);
         const respuestaImagenes = await imagen_.eliminarImagenes(id);
-        if(respuestaComentarios && respuestaLikes && respuestaImagenes){
-            res.json({mensaje:'Imagen eliminada correctamente'});
-        }else{
-           return res.status(500).json({ error: 'Ha habido un error al eliminar los datos de la bd' }); 
+
+        //borrar los archivos
+        console.log(image_path);
+        fs.unlink(`public/imagenes/${image_path}`, (err) => {
+            if (err) {
+                console.error('Error al borrar:', err);
+                return;
+            }
+            console.log('Archivo borrado exitosamente');
+        });
+
+        if (respuestaComentarios && respuestaLikes && respuestaImagenes) {
+            res.json({ mensaje: 'Imagen eliminada correctamente' });
+        } else {
+            return res.status(500).json({ error: 'Ha habido un error al eliminar los datos de la bd' });
         }
     } catch (error) {
         return res.status(500).json({ error: 'Ha habido un error al eliminar los datos' });
